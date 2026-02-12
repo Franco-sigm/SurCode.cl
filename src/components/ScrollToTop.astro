@@ -1,0 +1,33 @@
+<button
+  id="to-top-btn"
+  aria-label="Volver al inicio"
+  class="fixed bottom-8 right-8 z-40 p-3 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-600/40 
+         opacity-0 translate-y-10 invisible transition-all duration-300
+         hover:bg-blue-500 hover:-translate-y-1 hover:shadow-blue-500/60"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+  </svg>
+</button>
+
+<script>
+  const btn = document.getElementById('to-top-btn');
+
+  // 1. Mostrar/Ocultar el botón según el scroll
+  window.addEventListener('scroll', () => {
+    // Si bajamos más de 500px, mostramos el botón
+    if (window.scrollY > 500) {
+      btn?.classList.remove('opacity-0', 'translate-y-10', 'invisible');
+    } else {
+      btn?.classList.add('opacity-0', 'translate-y-10', 'invisible');
+    }
+  });
+
+  // 2. Acción de volver arriba suavemente
+  btn?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // El scroll suave nativo del navegador
+    });
+  });
+</script>

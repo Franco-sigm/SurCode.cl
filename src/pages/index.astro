@@ -4,20 +4,19 @@ import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
 import Contacto from '../components/Contacto.astro'
 import FAQ from '../components/FAQ.astro'
-import Footer from '../components/Footer.astro'
+import Process from '../components/Process.astro'
+
 ;
 // Aquí importaremos Services, Portfolio, etc. más adelante
 ---
 
 <Layout title="Surcode | Desarrollo Web & Software a Medida">
-	<main>
+       
+	<main class="relative z-10">
         <Hero />
         <Services />
         <FAQ />
+        <Process />
         <Contacto />
-        <Footer />
-
-        
-        <!-- Aquí añadiremos más secciones como Portfolio, Testimonials, Contact, etc. -->
 	</main>
 </Layout>

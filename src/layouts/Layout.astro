@@ -1,50 +1,115 @@
 ---
 import Footer from '../components/Footer.astro';
 import Navbar from '../components/Navbar.astro';
-
+import ScrollToTop from '../components/ScrollToTop.astro';
 
 interface Props {
-	title: string;
-    description?: string;
+  title: string;
+  description?: string;
+  image?: string; 
 }
 
-const { title, description = "Desarrollo web y soluciones digitales a medida." } = Astro.props;
+const { 
+  title, 
+  description = "Expertos en desarrollo web de alto nivel y soluciones digitales a medida en Chile. Impulsamos tu negocio con tecnología del Nodo Austral.",
+  image = "/og-image.jpg" 
+} = Astro.props;
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surcode.cl');
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="bg-slate-900 text-slate-50 antialiased selection:bg-blue-500 selection:text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0a0f1d" />
+
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "SurCode",
+        "image": "https://surcode.cl/logo.png",
+        "@id": "https://surcode.cl",
+        "url": "https://surcode.cl",
+        "telephone": "+56958100428",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Santiago",
+          "addressCountry": "CL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -33.4489,
+          "longitude": -70.6693
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "08:00",
+          "closes": "23:00"
+        },
+        "sameAs": [
+          "https://wa.me/56958100428"
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-[#0a0f1d] text-slate-50 antialiased selection:bg-cyan-500/30 selection:text-cyan-400">
+  
+    <Navbar />
+    <main>
         <slot />
-		<Navbar />
-	
-		<Footer />
+    </main>
+    <Footer />
+    <ScrollToTop />
 
     <script>
       import Lenis from 'lenis';
 
-      // Inicializar Lenis
       const lenis = new Lenis({
-        duration: 1.2, // Cuánto tarda en frenar (mientras más alto, más "pesado")
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Curva de suavidad
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         gestureDirection: 'vertical',
         smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
       });
 
-      // Conectar Lenis al loop de animación del navegador
-      function raf(time) {
+      function raf(time: number) {
         lenis.raf(time);
         requestAnimationFrame(raf);
       }
@@ -55,8 +120,18 @@ const { title, description = "Desarrollo web y soluciones digitales a medida." }
 </html>
 
 <style is:global>
-    /* Estilos globales si los necesitas */
-	body {
-		font-family: system-ui, -apple-system, sans-serif;
-	}
+  @font-face {
+    font-family: 'Geist';
+    src: url('/fonts/Geist-Variable.woff2') format('woff2');
+    font-display: swap;
+  }
+
+  body {
+    font-family: 'Geist', system-ui, -apple-system, sans-serif;
+  }
+
+  :focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 4px;
+  }
 </style>
