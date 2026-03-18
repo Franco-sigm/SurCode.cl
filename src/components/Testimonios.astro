@@ -1,0 +1,77 @@
+---
+const testimonials = [
+  { name: "Roberto Méndez", role: "Operaciones", company: "Logística Austral", content: "El Agente de IA redujo nuestra carga de soporte en un 80%. Increíble.", color: "bg-blue-500" },
+  { name: "Elena Valdés", role: "CEO", company: "NexuSoft", content: "Un sistema de gestión robusto y escalable. Superó nuestras expectativas técnicas.", color: "bg-purple-500" },
+  { name: "Ignacio Soto", role: "CTO", company: "Vertix Fintech", content: "Seguridad nivel bancario y una UX impecable. El estándar Austral se nota.", color: "bg-emerald-500" },
+  { name: "Karla Ríos", role: "Founder", company: "EcoRetail", content: "La automatización de inventario nos ahorró 20 horas semanales de trabajo manual.", color: "bg-cyan-500" },
+  { name: "Marco Peña", role: "Director", company: "Constructora Delta", content: "Software con cerebro real. La IA entiende nuestros procesos a la perfección.", color: "bg-orange-500" },
+  { name: "Sofía Lastra", role: "Marketing", company: "TrendAgency", content: "Nuestra nueva plataforma inteligente autogestiona leads de forma humana.", color: "bg-pink-500" }
+];
+
+// Duplicamos el array para el efecto de scroll infinito suave
+const doubleTestimonials = [...testimonials, ...testimonials];
+---
+
+<section class="py-24 bg-[#050810] overflow-hidden relative">
+  <div class="container mx-auto px-6 mb-12 text-center">
+    <h2 class="text-cyan-400 font-black uppercase tracking-[0.3em] text-[10px] mb-4">Trusted by Experts</h2>
+    <h3 class="text-3xl md:text-4xl font-black text-white uppercase italic tracking-tighter">¿Que opinan de <span class="text-blue-500">SurCode?</span></h3>
+  </div>
+
+  <div class="relative flex overflow-hidden group">
+    <div class="flex animate-scroll hover:[animation-play-state:paused] whitespace-nowrap gap-6 py-4">
+      {doubleTestimonials.map((t) => (
+        <div class="w-[350px] shrink-0 bg-white/[0.03] border border-white/10 p-6 rounded-2xl shadow-xl transition-all hover:bg-white/[0.06] hover:border-blue-500/30">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <div class={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white font-bold text-sm shadow-lg`}>
+                {t.name.charAt(0)}
+              </div>
+              <div class="flex flex-col">
+                <span class="text-white font-bold text-sm tracking-tight">{t.name}</span>
+                <span class="text-slate-500 text-[10px] uppercase">{t.company}</span>
+              </div>
+            </div>
+            <svg class="w-5 h-5 opacity-40" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+          </div>
+
+          <div class="flex gap-0.5 mb-3">
+            {[1, 2, 3, 4, 5].map(() => (
+              <svg class="w-3.5 h-3.5 text-yellow-500 fill-current" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+
+          <p class="text-slate-400 text-sm italic leading-relaxed whitespace-normal">
+            "{t.content}"
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050810] to-transparent z-10"></div>
+    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#050810] to-transparent z-10"></div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-350px * 6 - 1.5rem * 6)); }
+  }
+
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
+  }
+
+  /* Pausar al pasar el mouse para que el usuario pueda leer mejor */
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+</style>
