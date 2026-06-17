@@ -1,4 +1,6 @@
 ---
+import Logo from "./Logo.astro";
+
 const year = new Date().getFullYear();
 ---
 
@@ -24,21 +26,7 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
       
       <div class="space-y-6">
-        <a href="#" class="flex items-center gap-3 group">
-          <div class="relative w-12 h-12 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 group-hover:border-cyan-500/50 transition-all duration-500">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-8 h-8 transition-all duration-500 group-hover:scale-110">
-               <path d="M5 6L19 6L12 17L5 6Z" stroke="#22d3ee" stroke-width="1.5" stroke-linejoin="round" class="opacity-70" />
-               <circle cx="5" cy="6" r="1.5" fill="#22d3ee" />
-               <circle cx="19" cy="6" r="1.5" fill="#22d3ee" />
-               <path d="M12 13.5L15.5 17L12 20.5L8.5 17L12 13.5Z" fill="#a855f7" />
-               <circle cx="12" cy="17" r="1.2" fill="#d946ef" />
-             </svg>
-          </div>
-          <div class="flex flex-col tracking-tighter leading-none uppercase italic">
-             <span class="text-2xl font-black text-white">SUR</span>
-             <span class="text-2xl font-black text-cyan-400">CODE</span>
-          </div>
-        </a>
+        <Logo href="#inicio" boxClass="w-12 h-12 rounded-xl text-lg" wordClass="text-3xl" />
         <p class="max-w-xs leading-relaxed text-slate-400/80 italic">
           Expertos en <strong>desarrollo web en Chile</strong>. Creamos landing pages y sistemas a medida bajo los mejores estandares de calidad.
         </p>
@@ -80,7 +68,7 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] tracking-[0.3em] uppercase">
-        <p class="text-slate-500">© {year} <span class="text-white font-black italic tracking-tighter">SUR<span class="text-cyan-400">CODE</span></span>. All rights reserved.</p>
+        <p class="text-slate-500">© {year} <span class="font-black tracking-tight lowercase"><span class="text-white">sur</span><span class="text-cyan-400">code</span></span>. Todos los derechos reservados.</p>
         <div class="flex gap-8 text-slate-500">
           <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" class="hover:text-white transition-colors">Terms of Service</a>

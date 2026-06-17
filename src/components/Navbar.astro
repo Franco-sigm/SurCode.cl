@@ -1,8 +1,10 @@
 ---
+import Logo from "./Logo.astro";
+
 const links = [
   { name: "Servicios", href: "#servicios" },
   { name: "Como trabajamos", href: "#proceso" },
-  { name: "Preguntas frecuentes", href: "#faq" } 
+  { name: "Preguntas frecuentes", href: "#faq" }
 ];
 ---
 
@@ -11,22 +13,7 @@ const links = [
   
   <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-10 transition-all duration-500" id="header-container">
     
-    <a href="#inicio" class="flex items-center gap-2 group">
-      <div class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 group-hover:border-cyan-500/50 transition-all duration-500 shadow-2xl">
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-6 h-6 transition-all duration-500 group-hover:scale-110">
-           <path d="M5 6L19 6L12 17L5 6Z" stroke="#22d3ee" stroke-width="1.5" stroke-linejoin="round" />
-           <circle cx="5" cy="6" r="1.5" fill="#22d3ee" />
-           <circle cx="19" cy="6" r="1.5" fill="#22d3ee" />
-           
-           <path d="M12 13.5L15.5 17L12 20.5L8.5 17L12 13.5Z" fill="#a855f7" class="animate-pulse shadow-purple-500" />
-           <circle cx="12" cy="17" r="1.2" fill="#d946ef" />
-         </svg>
-      </div>
-      <div class="flex flex-col tracking-tighter leading-none uppercase italic">
-         <span class="text-lg font-black text-white">SUR</span>
-         <span class="text-lg font-black text-cyan-400">CODE</span>
-      </div>
-    </a>
+    <Logo href="#inicio" boxClass="w-10 h-10 rounded-xl text-base" wordClass="text-2xl" />
 
     <nav class="hidden md:flex items-center gap-8">
       {links.map((link) => (
