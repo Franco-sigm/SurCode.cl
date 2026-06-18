@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const actualizacion = "17 de junio de 2026";
+---
+
+<Layout title="Términos de Servicio | SurCode" description="Términos y condiciones de uso del sitio y los servicios de SurCode.">
+  <section class="relative min-h-screen pt-32 pb-24 bg-[#0a0f1d] overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <article class="max-w-3xl mx-auto px-6 relative z-10">
+      <p class="text-[#62d84e] text-xs font-bold uppercase tracking-widest mb-4">Legal</p>
+      <h1 class="font-sn text-4xl md:text-5xl font-extrabold -tracking-[0.02em] text-white mb-4">Términos de Servicio</h1>
+      <p class="text-slate-400 text-sm mb-12">Última actualización: {actualizacion}</p>
+
+      <div class="space-y-3 text-slate-300 leading-relaxed legal">
+        <p>
+          Estos Términos de Servicio regulan el uso del sitio web de <strong class="text-white">SurCode</strong> y la
+          relación entre SurCode y quienes nos contactan o contratan nuestros servicios. Al usar este sitio aceptas
+          estos términos.
+        </p>
+
+        <h2>1. Quiénes somos</h2>
+        <p>
+          SurCode es una software factory con domicilio en Santiago, Chile, dedicada al desarrollo de software a medida,
+          automatizaciones, integraciones de inteligencia artificial, sitios web y soluciones de cumplimiento de datos.
+        </p>
+
+        <h2>2. Uso del sitio</h2>
+        <p>
+          Te comprometes a utilizar este sitio de forma lícita y a no realizar acciones que puedan dañarlo, interrumpir
+          su funcionamiento o vulnerar derechos de terceros. Nos reservamos el derecho de restringir el acceso ante un
+          uso indebido.
+        </p>
+
+        <h2>3. Servicios y cotizaciones</h2>
+        <p>
+          La información del sitio tiene carácter informativo y no constituye una oferta vinculante. Los servicios,
+          plazos y precios se acuerdan de forma específica en cada propuesta o contrato. Una cotización no genera
+          obligación hasta que ambas partes la aceptan por escrito.
+        </p>
+
+        <h2>4. Propiedad intelectual</h2>
+        <p>
+          Los contenidos de este sitio —textos, diseño, logotipos, gráficos y código— son propiedad de SurCode o se
+          utilizan con autorización, y están protegidos por la legislación vigente. No está permitido reproducirlos o
+          usarlos sin nuestro consentimiento previo y por escrito.
+        </p>
+        <p>
+          La titularidad del software u otros entregables desarrollados para un cliente se regula en el contrato
+          correspondiente a cada proyecto.
+        </p>
+
+        <h2>5. Responsabilidad</h2>
+        <p>
+          El sitio se ofrece "tal cual". En la medida que lo permita la ley, SurCode no será responsable por daños
+          indirectos derivados del uso del sitio o de la imposibilidad de usarlo. Procuramos mantener la información
+          actualizada y el sitio disponible, pero no garantizamos que esté libre de errores o interrupciones.
+        </p>
+
+        <h2>6. Enlaces a terceros</h2>
+        <p>
+          Este sitio puede contener enlaces a servicios de terceros (por ejemplo, WhatsApp o proveedores de formularios).
+          No somos responsables del contenido ni de las políticas de dichos sitios, que se rigen por sus propios términos.
+        </p>
+
+        <h2>7. Protección de datos</h2>
+        <p>
+          El tratamiento de datos personales se rige por nuestra
+          <a href="/privacidad">Política de Privacidad</a>, que forma parte integrante de estos términos.
+        </p>
+
+        <h2>8. Modificaciones</h2>
+        <p>
+          Podemos modificar estos términos en cualquier momento. La versión vigente será siempre la publicada en esta
+          página, con su fecha de última actualización.
+        </p>
+
+        <h2>9. Ley aplicable y jurisdicción</h2>
+        <p>
+          Estos términos se rigen por las leyes de la República de Chile. Cualquier controversia se someterá a los
+          tribunales competentes de la ciudad de Santiago.
+        </p>
+
+        <h2>10. Contacto</h2>
+        <p>
+          Para cualquier consulta sobre estos términos, escríbenos a
+          <a data-mail="contacto" data-dom="surcode.cl" data-fill href="#">contacto [arroba] surcode.cl</a>.
+        </p>
+      </div>
+
+      <div class="mt-16">
+        <a href="/" class="inline-flex items-center gap-2 text-[#62d84e] font-bold hover:underline">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+          Volver al inicio
+        </a>
+      </div>
+    </article>
+  </section>
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+  .legal h2 { font-weight: 700; color: #fff; font-size: 1.25rem; margin-top: 2.5rem; margin-bottom: 0.5rem; }
+  .legal ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+  .legal ul li { margin: 0.35rem 0; }
+  .legal a { color: #62d84e; text-decoration: underline; text-underline-offset: 3px; }
+  .legal a:hover { color: #74e85f; }
+</style>

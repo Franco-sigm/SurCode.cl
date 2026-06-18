@@ -1,11 +1,12 @@
 ---
 import Logo from "./Logo.astro";
 
+// Enlaces absolutos a secciones de la home: funcionan también desde /contacto u otras páginas
 const links = [
-  { name: "Servicios", href: "#servicios" },
-  { name: "Ley 21.719", href: "#ley-21719" },
-  { name: "Como trabajamos", href: "#proceso" },
-  { name: "Preguntas frecuentes", href: "#faq" }
+  { name: "Servicios", href: "/#servicios" },
+  { name: "Ley 21.719", href: "/#ley-21719" },
+  { name: "Como trabajamos", href: "/#proceso" },
+  { name: "Preguntas frecuentes", href: "/#faq" }
 ];
 ---
 
@@ -14,7 +15,7 @@ const links = [
   
   <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-10 transition-all duration-500" id="header-container">
     
-    <Logo href="#inicio" wordClass="text-2xl" />
+    <Logo href="/#inicio" wordClass="text-2xl" />
 
     <nav class="hidden md:flex items-center gap-8">
       {links.map((link) => (
@@ -41,7 +42,7 @@ const links = [
           {link.name}
         </a>
       ))}
-      <a href="https://wa.me/56958100428" class="w-full max-w-xs py-4 bg-cyan-400 text-[#050810] flex items-center justify-center gap-2 rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-cyan-500/10">
+      <a href="#" data-wa="NTY5NTgxMDA0Mjg=" class="w-full max-w-xs py-4 bg-cyan-400 text-[#050810] flex items-center justify-center gap-2 rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-cyan-500/10">
          <span>📞</span>
          Cotizar Ahora
       </a>

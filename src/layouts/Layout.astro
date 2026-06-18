@@ -17,6 +17,9 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surcode.cl');
+
+// Oculta el botón flotante de contacto cuando ya estamos en la página de contacto
+const isContactPage = Astro.url.pathname.replace(/\/$/, '') === '/contacto';
 ---
 
 <!doctype html>
@@ -103,8 +106,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://surcode.
         <slot />
     </main>
     <Footer />
-    <FloatingContact />
+    {!isContactPage && <FloatingContact />}
     <ScrollToTop />
+
+    <script>
+      // Anti-scraping: arma correos y enlaces de WhatsApp desde atributos codificados,
+      // para que el número y el correo NO aparezcan en el HTML estático.
+      document.querySelectorAll('a[data-mail]').forEach((el) => {
+        const a = el as HTMLAnchorElement;
+        const addr = (a.dataset.mail || '') + '@' + (a.dataset.dom || '');
+        a.href = 'mailto:' + addr;
+        if ('fill' in a.dataset) a.textContent = addr;
+      });
+      document.querySelectorAll('a[data-wa]').forEach((el) => {
+        const a = el as HTMLAnchorElement;
+        let num = '';
+        try { num = atob(a.dataset.wa || ''); } catch {}
+        a.href = 'https://wa.me/' + num + (a.dataset.waText ? '?text=' + a.dataset.waText : '');
+        a.setAttribute('rel', 'noopener');
+      });
+    </script>
 
     <script>
       import Lenis from 'lenis';

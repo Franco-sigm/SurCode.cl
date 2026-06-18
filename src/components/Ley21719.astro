@@ -3,14 +3,13 @@
 // Diseñada para reflejar los módulos de la futura plataforma de cumplimiento de SurCode.
 // CTA principal: diagnóstico gratis por WhatsApp. CTA secundario: preparado para enlazar a la plataforma.
 
-const WHATSAPP = "https://wa.me/56958100428?text=Hola%2C%20quiero%20un%20diagn%C3%B3stico%20gratis%20de%20cumplimiento%20de%20la%20Ley%2021.719";
 // TODO: reemplazar por la URL de la plataforma cuando esté disponible (ej. https://cumplimiento.surcode.cl)
 const PLATAFORMA_URL = "#contacto";
 ---
 
-<section id="ley-21719" class="relative py-24 overflow-hidden" style="background-color:#42388f">
-  <!-- Blend superior: arranca en el mismo púrpura que cierra el Hero y se funde con el fondo -->
-  <div class="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#3a2f7d] to-transparent pointer-events-none"></div>
+<section id="ley-21719" class="relative py-24 overflow-hidden" style="background-color:#1e1b4b">
+  <!-- Blend superior: arranca en el mismo índigo que cierra el Hero y se funde con el fondo -->
+  <div class="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#1e1b4b] to-transparent pointer-events-none"></div>
 
   <div class="container mx-auto px-6 relative z-10">
 
@@ -38,11 +37,7 @@ const PLATAFORMA_URL = "#contacto";
           <span class="text-white font-semibold">antes de la fiscalización</span>.
         </p>
 
-        <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
-          <a href={WHATSAPP} target="_blank" rel="noopener"
-             class="inline-flex items-center justify-center px-8 h-14 rounded-full bg-[#62d84e] text-[#04101f] font-bold text-sm transition-all hover:bg-[#74e85f] hover:scale-105 shadow-[0_10px_40px_rgba(98,216,78,0.35)]">
-            Diagnóstico gratis
-          </a>
+        <div class="flex justify-center">
           <a href={PLATAFORMA_URL}
              class="group inline-flex items-center gap-2 text-white font-bold text-sm hover:text-[#62d84e] transition-colors">
             Conoce la plataforma
@@ -176,20 +171,23 @@ const PLATAFORMA_URL = "#contacto";
     setInterval(tick, 60000);
   }
 
-  // Fondo púrpura que cambia de tono según el scroll
+  // Fondo púrpura que NACE a medida que haces scroll hacia la sección:
+  // arranca en el índigo del Hero y florece al púrpura suave durante la aproximación.
   const section = document.getElementById('ley-21719');
   if (section) {
-    const c1 = [58, 47, 125];   // #3a2f7d (púrpura profundo, al entrar)
-    const c2 = [101, 88, 196];  // #6558c4 (púrpura suave, al avanzar)
+    const c1 = [30, 27, 75];    // #1e1b4b (índigo del Hero, antes de entrar)
+    const c2 = [101, 88, 196];  // #6558c4 (púrpura suave, ya revelado)
     const lerp = (a: number, b: number, t: number) => Math.round(a + (b - a) * t);
+    const ease = (t: number) => t * t * (3 - 2 * t); // suaviza el inicio y el final
     let ticking = false;
     const update = () => {
       ticking = false;
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Progreso: 0 cuando la sección entra por abajo, 1 cuando sale por arriba
-      let p = (vh - rect.top) / (rect.height + vh);
-      p = Math.min(1, Math.max(0, p));
+      // Progreso: 0 cuando el borde superior entra por abajo (rect.top = vh),
+      // 1 cuando ese borde llega arriba (rect.top = 0). El púrpura nace en ese tramo.
+      let p = 1 - rect.top / vh;
+      p = ease(Math.min(1, Math.max(0, p)));
       const r = lerp(c1[0], c2[0], p);
       const g = lerp(c1[1], c2[1], p);
       const b = lerp(c1[2], c2[2], p);

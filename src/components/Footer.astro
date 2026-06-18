@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
       
       <div class="space-y-6">
-        <Logo href="#inicio" wordClass="text-3xl" />
+        <Logo href="/#inicio" wordClass="text-3xl" />
         <p class="max-w-xs leading-relaxed text-slate-400/80 italic">
           Expertos en <strong>desarrollo web en Chile</strong>. Creamos landing pages y sistemas a medida bajo los mejores estandares de calidad.
         </p>
@@ -41,9 +41,11 @@ const year = new Date().getFullYear();
       <div>
         <h4 class="text-white font-black uppercase tracking-[0.2em] text-xs mb-8 shadow-cyan-500/20">Mapa del sitio</h4>
         <ul class="space-y-4">
-            <li><a href="#servicios" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Servicios Digitales</a></li>
-            <li><a href="#proceso" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Nuestra Metodología</a></li>
-            <li><a href="#faq" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Dudas Frecuentes</a></li>
+            <li><a href="/#servicios" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Servicios Digitales</a></li>
+            <li><a href="/#ley-21719" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Ley 21.719</a></li>
+            <li><a href="/#proceso" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Nuestra Metodología</a></li>
+            <li><a href="/#faq" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Dudas Frecuentes</a></li>
+            <li><a href="/contacto" class="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span class="w-1.5 h-px bg-cyan-500 group-hover:w-4 transition-all"></span> Contacto</a></li>
         </ul>
       </div>
 
@@ -54,7 +56,7 @@ const year = new Date().getFullYear();
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/10 transition-colors">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                 </div>
-                <span class="font-medium">contacto@surcode.cl</span>
+                <a data-mail="contacto" data-dom="surcode.cl" data-fill href="#" class="font-medium hover:text-cyan-400 transition-colors">contacto [arroba] surcode.cl</a>
             </li>
             <li class="flex items-center gap-4 group">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/10 transition-colors">
@@ -70,8 +72,8 @@ const year = new Date().getFullYear();
     <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] tracking-[0.3em] uppercase">
         <p class="text-slate-500">© {year} <span class="font-black tracking-tight lowercase"><span class="text-white">sur</span><span class="text-cyan-400">code</span></span>. Todos los derechos reservados.</p>
         <div class="flex gap-8 text-slate-500">
-          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+          <a href="/privacidad" class="hover:text-white transition-colors">Política de Privacidad</a>
+          <a href="/terminos" class="hover:text-white transition-colors">Términos de Servicio</a>
         </div>
     </div>
   </div>
