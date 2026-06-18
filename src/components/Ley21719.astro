@@ -62,6 +62,21 @@ const PLATAFORMA_URL = "#contacto";
              class="absolute bottom-5 right-5 w-32 sm:w-40 md:w-44 aspect-square rounded-full object-cover ring-2 ring-white/20 shadow-2xl z-20 select-none pointer-events-none"
              loading="lazy" decoding="async" width="900" height="900" />
 
+        <!-- Estrella verde brillante: hace "pop" desde el centro al cargar -->
+        <div class="ley-star absolute bottom-6 left-6 w-24 sm:w-28 md:w-32 z-20 pointer-events-none select-none" aria-hidden="true">
+          <svg viewBox="-8 -8 116 116" class="w-full h-full overflow-visible">
+            <defs>
+              <linearGradient id="leyStarFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#84ef67"/>
+                <stop offset="0.5" stop-color="#62d84e"/>
+                <stop offset="1" stop-color="#3aab2b"/>
+              </linearGradient>
+            </defs>
+            <path d="M50,7 L61.76,35.82 L92.8,38.1 L69.02,58.18 L76.45,88.4 L50,72 L23.55,88.4 L30.98,58.18 L7.2,38.1 L38.24,35.82 Z"
+                  fill="url(#leyStarFill)" stroke="#2f7d1f" stroke-width="5.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         <!-- Contenido superpuesto -->
         <div class="relative z-20 p-8 md:p-10">
           <p class="font-sn text-3xl md:text-4xl font-extrabold -tracking-[0.02em] leading-tight mb-6">
@@ -195,12 +210,6 @@ const PLATAFORMA_URL = "#contacto";
       const g = lerp(c1[1], c2[1], p);
       const b = lerp(c1[2], c2[2], p);
       section.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-
-      // Parallax sutil de la ejecutiva: se eleva ~28px conforme pasa la sección
-      if (mujer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const pr = clamp((vh - rect.top) / (rect.height + vh));
-        mujer.style.transform = `translateY(${(0.5 - pr) * 56}px)`;
-      }
     };
     const onScroll = () => {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
@@ -225,4 +234,28 @@ const PLATAFORMA_URL = "#contacto";
   .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
   /* Acordeón: anima la altura de 0fr a 1fr sin saltos */
   .ley-panel.open { grid-template-rows: 1fr; }
+
+  /* Estrella: nace pequeña en el centro y se expande rápido con un rebote */
+  .ley-star {
+    transform: scale(0);
+    transform-origin: center;
+    animation: ley-star-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+    filter: drop-shadow(0 6px 16px rgba(98, 216, 78, 0.45));
+  }
+  @keyframes ley-star-pop {
+    0%   { transform: scale(0) rotate(-45deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  /* Balanceo suave continuo (arranca cuando termina el pop) */
+  .ley-star svg {
+    animation: ley-star-bob 4.5s ease-in-out 1s infinite;
+  }
+  @keyframes ley-star-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-6px) rotate(5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ley-star { animation: none; transform: scale(1); }
+    .ley-star svg { animation: none; }
+  }
 </style>

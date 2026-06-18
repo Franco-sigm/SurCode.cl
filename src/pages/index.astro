@@ -12,14 +12,78 @@ import Testimonials from '../components/Testimonios.astro'
 ---
 
 <Layout title="Surcode | Desarrollo Web & Software a Medida">
-       
+
+	<!-- Intro de carga estilo ServiceNow: estrella que nace al centro, se expande y revela la página -->
+	<div id="intro-splash" aria-hidden="true">
+		<svg viewBox="-8 -8 116 116" class="intro-star">
+			<defs>
+				<linearGradient id="introStarFill" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0" stop-color="#84ef67"/>
+					<stop offset="0.5" stop-color="#62d84e"/>
+					<stop offset="1" stop-color="#3aab2b"/>
+				</linearGradient>
+			</defs>
+			<path d="M50,7 L61.76,35.82 L92.8,38.1 L69.02,58.18 L76.45,88.4 L50,72 L23.55,88.4 L30.98,58.18 L7.2,38.1 L38.24,35.82 Z"
+				  fill="url(#introStarFill)" stroke="#2f7d1f" stroke-width="5.5" stroke-linejoin="round"/>
+		</svg>
+	</div>
+
 	<main class="relative z-10">
         <Hero />
         <Ley21719 />
         <Services />
         <Testimonials />
         <FAQ />
-      
-      
+
+
 	</main>
 </Layout>
+
+<style>
+	/* Overlay a pantalla completa que se desvanece tras el pop de la estrella */
+	#intro-splash {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		pointer-events: none;
+		animation: intro-fade 0.5s ease-in forwards;
+	}
+	.intro-star {
+		width: clamp(110px, 22vw, 200px);
+		height: clamp(110px, 22vw, 200px);
+		transform-origin: center;
+		filter: drop-shadow(0 0 40px rgba(98, 216, 78, 0.55));
+		animation: intro-grow 0.5s ease-in forwards;
+	}
+	/* Parte pequeña en el centro, se agranda de forma continua y se desvanece */
+	@keyframes intro-grow {
+		0%   { transform: scale(0.12); opacity: 1; }
+		65%  { transform: scale(7); opacity: 1; }
+		100% { transform: scale(20); opacity: 0; }
+	}
+	@keyframes intro-fade {
+		0%      { opacity: 1; }
+		65%     { opacity: 1; }
+		100%    { opacity: 0; visibility: hidden; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		#intro-splash { display: none; }
+	}
+</style>
+
+<script>
+	// Quita el overlay del DOM cuando termina el fade (libera clics y scroll)
+	const splash = document.getElementById('intro-splash');
+	if (splash) {
+		const remove = () => splash.remove();
+		splash.addEventListener('animationend', (e) => {
+			if (e.target === splash) remove();
+		});
+		// Respaldo por si la animación no dispara el evento
+		setTimeout(remove, 1800);
+	}
+</script>
