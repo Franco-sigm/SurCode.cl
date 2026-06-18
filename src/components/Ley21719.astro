@@ -1,0 +1,221 @@
+---
+// Sección de servicio: Cumplimiento de la Ley 21.719 (Protección de Datos Personales, Chile).
+// Diseñada para reflejar los módulos de la futura plataforma de cumplimiento de SurCode.
+// CTA principal: diagnóstico gratis por WhatsApp. CTA secundario: preparado para enlazar a la plataforma.
+
+const WHATSAPP = "https://wa.me/56958100428?text=Hola%2C%20quiero%20un%20diagn%C3%B3stico%20gratis%20de%20cumplimiento%20de%20la%20Ley%2021.719";
+// TODO: reemplazar por la URL de la plataforma cuando esté disponible (ej. https://cumplimiento.surcode.cl)
+const PLATAFORMA_URL = "#contacto";
+---
+
+<section id="ley-21719" class="relative py-24 overflow-hidden" style="background-color:#42388f">
+  <!-- Blend superior: arranca en el mismo púrpura que cierra el Hero y se funde con el fondo -->
+  <div class="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#3a2f7d] to-transparent pointer-events-none"></div>
+
+  <div class="container mx-auto px-6 relative z-10">
+
+    <!-- Hero de dos columnas -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Columna izquierda: texto -->
+      <div>
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 text-amber-300 text-xs font-bold uppercase tracking-widest mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75 animate-ping"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+          </span>
+          Nueva Ley · Vigencia 1 dic 2026
+        </span>
+
+        <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] leading-[1.05] mb-6">
+          
+          <span class="block text-white"> Cumplir la Ley 21.719 sin frenar tu negocio.</span>
+        </h2>
+
+        <p class="text-slate-300/90 text-base md:text-lg leading-relaxed max-w-xl mb-10">
+          La nueva Ley de Protección de Datos obliga a toda empresa que maneje datos de clientes —ventas, salud,
+          finanzas, RRHH— sin importar su tamaño. En SurCode construimos el software que te deja en regla
+          <span class="text-white font-semibold">antes de la fiscalización</span>.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a href={WHATSAPP} target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center px-8 h-14 rounded-full bg-[#62d84e] text-[#04101f] font-bold text-sm transition-all hover:bg-[#74e85f] hover:scale-105 shadow-[0_10px_40px_rgba(98,216,78,0.35)]">
+            Diagnóstico gratis
+          </a>
+          <a href={PLATAFORMA_URL}
+             class="group inline-flex items-center gap-2 text-white font-bold text-sm hover:text-[#62d84e] transition-colors">
+            Conoce la plataforma
+            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: panel visual -->
+      <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl min-h-[420px] flex flex-col justify-end">
+        <!-- Fondo del panel -->
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0a3a2a] via-[#06283f] to-[#0a4d8f]"></div>
+        <div class="absolute inset-0 opacity-[0.18]"
+             style="background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 38px, #334155 39px, #334155 40px);"></div>
+        <!-- Ícono escudo decorativo -->
+        <svg class="absolute -top-6 -right-6 w-56 h-56 text-[#62d84e]/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+        </svg>
+
+        <!-- Contenido superpuesto -->
+        <div class="relative p-8 md:p-10">
+          <p class="font-sn text-3xl md:text-4xl font-extrabold -tracking-[0.02em] leading-tight mb-6">
+            <span class="text-[#62d84e]">Protege los datos.</span><br>
+            <span class="text-white">Evita las multas.</span>
+          </p>
+
+          <!-- Contador integrado -->
+          <p class="text-xs uppercase tracking-widest text-[#62d84e] font-bold mb-2">Plazo para estar en regla</p>
+          <div id="ley-countdown" class="flex items-end gap-2.5 text-white mb-1" data-deadline="2026-12-01T00:00:00-03:00" data-start="2024-12-13T00:00:00-03:00">
+            <div><span data-unit="dias" class="block text-3xl md:text-4xl font-black tabular-nums leading-none">—</span><span class="text-[10px] uppercase tracking-widest text-slate-400">días</span></div>
+            <span class="text-xl font-black text-slate-500 pb-2.5">:</span>
+            <div><span data-unit="horas" class="block text-3xl md:text-4xl font-black tabular-nums leading-none">—</span><span class="text-[10px] uppercase tracking-widest text-slate-400">hrs</span></div>
+            <span class="text-xl font-black text-slate-500 pb-2.5">:</span>
+            <div><span data-unit="min" class="block text-3xl md:text-4xl font-black tabular-nums leading-none">—</span><span class="text-[10px] uppercase tracking-widest text-slate-400">min</span></div>
+          </div>
+          <p class="text-slate-400 text-xs">hasta el 1 de diciembre de 2026</p>
+        </div>
+
+        <!-- Barra de progreso verde (se llena según el tiempo transcurrido) -->
+        <div class="relative h-1.5 bg-white/10">
+          <div id="ley-progress" class="h-full bg-[#62d84e] transition-[width] duration-1000" style="width:0%"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Saber más: explicación para quien no conoce la ley -->
+    <div class="text-center mt-16">
+      <button id="ley-saber-btn" type="button" aria-expanded="false" aria-controls="ley-explainer"
+              class="group inline-flex items-center gap-2 text-slate-300 hover:text-[#62d84e] text-sm font-semibold transition-colors">
+        ¿Qué es la Ley 21.719?
+        <svg id="ley-chevron" class="w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="ley-explainer" class="ley-panel grid grid-rows-[0fr] transition-all duration-500 ease-in-out max-w-4xl mx-auto mt-6">
+      <div class="overflow-hidden">
+        <div class="rounded-3xl border border-white/5 bg-[#0a0f1d]/80 p-8 md:p-10 text-left grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="text-[#62d84e] font-bold mb-2">¿Qué es?</h4>
+            <p class="text-slate-300/90 text-sm leading-relaxed">
+              Es la nueva Ley de Protección de Datos Personales de Chile (dic 2024). Reemplaza una ley de 1999 sin
+              capacidad real de sanción y, por primera vez, crea una Agencia (APDP) que puede fiscalizar y multar.
+              Está inspirada en el GDPR europeo.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-[#62d84e] font-bold mb-2">¿A quién aplica?</h4>
+            <p class="text-slate-300/90 text-sm leading-relaxed">
+              A cualquier empresa —grande o PYME— que recopile o use datos personales: nombres, RUT, correos, datos de
+              salud, financieros o de RRHH. Si tienes una base de clientes, te aplica.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-[#62d84e] font-bold mb-2">¿Qué te exige?</h4>
+            <ul class="text-slate-300/90 text-sm leading-relaxed space-y-1.5 list-disc list-inside marker:text-[#62d84e]">
+              <li>Pedir consentimiento explícito para usar los datos.</li>
+              <li>Dejar que las personas accedan, corrijan o eliminen sus datos.</li>
+              <li>Registrar cómo tratas los datos y avisar filtraciones en 72 horas.</li>
+              <li>Aplicar medidas de seguridad reales.</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-[#62d84e] font-bold mb-2">¿Qué pasa si no cumplo?</h4>
+            <p class="text-slate-300/90 text-sm leading-relaxed">
+              Multas de hasta 20.000 UTM (~$1.400 millones) o hasta el 4% de tus ventas anuales en reincidencia.
+              La fecha límite para estar en regla es el <span class="text-white font-semibold">1 de diciembre de 2026</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Contador regresivo hasta la entrada en vigencia (1 dic 2026)
+  const el = document.getElementById('ley-countdown');
+  if (el) {
+    const deadline = new Date(el.dataset.deadline || '2026-12-01T00:00:00-03:00').getTime();
+    const start = new Date(el.dataset.start || '2024-12-13T00:00:00-03:00').getTime();
+    const progress = document.getElementById('ley-progress');
+    const set = (unit: string, val: number) => {
+      const node = el.querySelector(`[data-unit="${unit}"]`);
+      if (node) node.textContent = String(val).padStart(2, '0');
+    };
+    const tick = () => {
+      const now = Date.now();
+      const diff = deadline - now;
+      if (diff <= 0) {
+        set('dias', 0); set('horas', 0); set('min', 0);
+        if (progress) progress.style.width = '100%';
+        return;
+      }
+      const dias = Math.floor(diff / 86400000);
+      const horas = Math.floor((diff % 86400000) / 3600000);
+      const min = Math.floor((diff % 3600000) / 60000);
+      set('dias', dias); set('horas', horas); set('min', min);
+      if (progress) {
+        const pct = Math.min(100, Math.max(0, ((now - start) / (deadline - start)) * 100));
+        progress.style.width = pct.toFixed(1) + '%';
+      }
+    };
+    tick();
+    setInterval(tick, 60000);
+  }
+
+  // Fondo púrpura que cambia de tono según el scroll
+  const section = document.getElementById('ley-21719');
+  if (section) {
+    const c1 = [58, 47, 125];   // #3a2f7d (púrpura profundo, al entrar)
+    const c2 = [101, 88, 196];  // #6558c4 (púrpura suave, al avanzar)
+    const lerp = (a: number, b: number, t: number) => Math.round(a + (b - a) * t);
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Progreso: 0 cuando la sección entra por abajo, 1 cuando sale por arriba
+      let p = (vh - rect.top) / (rect.height + vh);
+      p = Math.min(1, Math.max(0, p));
+      const r = lerp(c1[0], c2[0], p);
+      const g = lerp(c1[1], c2[1], p);
+      const b = lerp(c1[2], c2[2], p);
+      section.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    };
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  // Desplegable "¿Qué es la Ley 21.719?"
+  const saberBtn = document.getElementById('ley-saber-btn');
+  const panel = document.getElementById('ley-explainer');
+  const chevron = document.getElementById('ley-chevron');
+  saberBtn?.addEventListener('click', () => {
+    const open = panel?.classList.toggle('open');
+    saberBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    chevron?.classList.toggle('rotate-180', open);
+  });
+</script>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+  /* Acordeón: anima la altura de 0fr a 1fr sin saltos */
+  .ley-panel.open { grid-template-rows: 1fr; }
+</style>
