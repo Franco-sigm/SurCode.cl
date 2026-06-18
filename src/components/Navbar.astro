@@ -57,9 +57,23 @@ const links = [
   const dropdown = document.getElementById('mobile-dropdown');
   const menuPath = document.getElementById('menu-path');
   const container = document.getElementById('header-container');
+  const header = document.getElementById('main-header');
+
+  let lastY = window.scrollY;
+  let idleTimer: number | undefined;
+  const TOP_THRESHOLD = 10;   // arriba del todo: siempre visible
+  const IDLE_MS = 1200;       // tras subir y quedar estático: ocultar
+
+  const menuOpen = () =>
+    !!dropdown && dropdown.style.maxHeight !== '0px' && dropdown.style.maxHeight !== '';
+  const showNav = () => header?.classList.remove('-translate-y-full');
+  const hideNav = () => { if (!menuOpen()) header?.classList.add('-translate-y-full'); };
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    const y = window.scrollY;
+
+    // Fondo + alto del header (comportamiento existente)
+    if (y > 50) {
       bg?.classList.add('opacity-100');
       bg?.classList.remove('opacity-0');
       container?.classList.replace('h-20', 'h-16');
@@ -68,7 +82,19 @@ const links = [
       bg?.classList.remove('opacity-100');
       container?.classList.replace('h-16', 'h-20');
     }
-  });
+
+    // Mostrar solo al hacer scroll hacia ARRIBA; ocultar al bajar o quedar estático
+    clearTimeout(idleTimer);
+    if (y <= TOP_THRESHOLD) {
+      showNav();
+    } else if (y < lastY) {
+      showNav();
+      idleTimer = window.setTimeout(hideNav, IDLE_MS);
+    } else if (y > lastY) {
+      hideNav();
+    }
+    lastY = y;
+  }, { passive: true });
 
   const toggleMenu = () => {
     const isOpened = dropdown?.style.maxHeight !== '0px' && dropdown?.style.maxHeight !== '';

@@ -244,6 +244,14 @@ const services = [
       nodes.forEach((n, idx) => n.classList.toggle('is-active', idx === i));
     }
 
+    // Mostrar solo el panel activo / ocultar todos (fade)
+    function showActive() {
+      panels.forEach((p, idx) => p.classList.toggle('is-shown', idx === active));
+    }
+    function hideAll() {
+      panels.forEach((p) => p.classList.remove('is-shown'));
+    }
+
     function activate(i: number, animate = true) {
       active = i;
       tabs.forEach((t, idx) => {
@@ -252,9 +260,16 @@ const services = [
         t.tabIndex = on ? 0 : -1;
       });
       moveIndicator(i);
-      panTo(i, animate);
       highlightNode(i);
+      hideAll();          // los mensajes desaparecen al empezar a navegar
+      panTo(i, animate);
+      if (!animate || reduce) showActive(); // sin animación: aparece de inmediato
     }
+
+    // Cuando el plano termina de desplazarse, reaparece el panel activo
+    plane.addEventListener('transitionend', (e) => {
+      if (e.target === plane && e.propertyName === 'transform') showActive();
+    });
 
     tabs.forEach((t, i) => t.addEventListener('click', () => activate(i)));
     tablist?.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -294,6 +309,17 @@ const services = [
     will-change: transform;
   }
 
+  /* Los mensajes: desaparecen al navegar, reaparecen suave al detenerse */
+  .svc-panel {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .55s ease, transform .55s ease;
+  }
+  .svc-panel.is-shown {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* ∞: cinta azul con glow + luz en movimiento */
   .svc-ring { filter: drop-shadow(0 0 32px rgba(59,158,255,0.40)); }
   .svc-ring-flow  { animation: svc-ring-flow 5s linear infinite; }
@@ -314,7 +340,7 @@ const services = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .svc-indicator, .svc-plane { transition: none; }
+    .svc-indicator, .svc-plane, .svc-panel { transition: none; }
     .svc-ring-flow, .svc-ring-flow2, .svc-ring-sheen { animation: none; }
   }
 </style>
