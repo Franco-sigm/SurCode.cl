@@ -1,149 +1,320 @@
 ---
+// Sección de Servicios: un ∞ (lemniscata) gigante de fondo que LLENA todo el frame,
+// con el menú superpuesto encima. Cada servicio es un punto del ∞; al elegir una
+// pestaña, el plano (∞ + contenido) se desplaza para centrar ese punto. SVG/CSS.
 const services = [
   {
-    title: "Automatizaciones a Medida",
+    id: "automation", tab: "Automatización",
     subtitle: "Recupera tu tiempo, elimina lo repetitivo",
+    title: "Automatizaciones a Medida",
     description: "Diseñamos flujos que ejecutan tus tareas manuales de forma automática, conectando tus herramientas para que tu negocio funcione solo.",
-    features: ["Automatización de tareas repetitivas", "Integración entre tus apps y APIs", "Flujos de trabajo personalizados", "Reportes y alertas automáticas", "Soporte y mantención continua"],
-    icon: "automation",
-    gradient: "from-violet-500 via-fuchsia-400 to-purple-600",
-    iconColor: "text-fuchsia-400"
+    features: ["Tareas repetitivas automatizadas", "Integración entre apps y APIs", "Flujos de trabajo a medida", "Reportes y alertas automáticas"],
+    icon: "⚡",
   },
   {
-    title: "Integraciones de Inteligencia Artificial",
+    id: "ai", tab: "IA",
     subtitle: "Lleva tu negocio a la vanguardia",
+    title: "Integraciones de Inteligencia Artificial",
     description: "Conectamos modelos de IA a tus procesos: chatbots, agentes y análisis inteligente que trabajan por ti las 24 horas.",
-    features: ["Chatbots y asistentes con IA", "Agentes autónomos a medida", "Integración con tus sistemas y datos", "Procesamiento de documentos y texto", "Ajuste y monitoreo continuo"],
-    isFeatured: true,
-    icon: "ai",
-    gradient: "from-cyan-500 via-blue-400 to-indigo-600",
-    iconColor: "text-cyan-400"
+    features: ["Chatbots y asistentes con IA", "Agentes autónomos a medida", "Integración con tus datos", "Procesamiento de documentos"],
+    icon: "🤖",
   },
   {
-    title: "Seguridad e Integridad de Datos",
+    id: "shield", tab: "Seguridad",
     subtitle: "Protege lo más valioso de tu negocio",
+    title: "Seguridad e Integridad de Datos",
     description: "Auditamos y blindamos tu infraestructura para mantener tus datos seguros, íntegros y siempre disponibles.",
-    features: ["Auditoría de seguridad", "Cifrado y respaldos automáticos", "Control de accesos y roles", "Buenas prácticas y cumplimiento", "Monitoreo y respuesta ante incidentes"],
-    icon: "shield",
-    gradient: "from-amber-500 via-orange-400 to-rose-500",
-    iconColor: "text-amber-400"
+    features: ["Auditoría de seguridad", "Cifrado y respaldos automáticos", "Control de accesos y roles", "Monitoreo ante incidentes"],
+    icon: "🛡️",
   },
   {
-    title: "Sistemas de Gestión Empresarial",
+    id: "dashboard", tab: "Gestión",
     subtitle: "Administración y control a medida",
+    title: "Sistemas de Gestión Empresarial",
     description: "Desarrollamos software de gestión hecho a tu medida para centralizar, ordenar y optimizar todas tus operaciones.",
-    features: ["Gestión de inventario", "Paneles de control y reportes", "Roles y permisos de usuario", "Interfaz simple e intuitiva", "Soporte técnico", "Hosting y dominio .cl/.com GRATIS por 1 año"],
-    icon: "dashboard",
-    gradient: "from-emerald-500 via-teal-400 to-emerald-600",
-    iconColor: "text-emerald-400"
+    features: ["Gestión de inventario", "Paneles de control y reportes", "Roles y permisos de usuario", "Hosting y dominio gratis 1 año"],
+    icon: "📊",
   },
   {
-    title: "E-commerce",
-    subtitle: "Tu tienda online lista para vender",
+    id: "ecommerce", tab: "E-commerce",
+    subtitle: "Tu tienda lista para vender",
+    title: "Tiendas Online (E-commerce)",
     description: "Creamos tiendas online potentes y seguras para que vendas tus productos de forma masiva y sin complicaciones.",
-    features: ["Carrito de compras", "Gestión de inventario", "Pagos seguros", "Experiencia de usuario fluida", "Soporte técnico", "Hosting y dominio .cl/.com GRATIS por 1 año"],
-    icon: "database",
-    gradient: "from-purple-500 via-fuchsia-400 to-purple-600",
-    iconColor: "text-purple-400"
+    features: ["Carrito y gestión de inventario", "Pagos seguros", "Experiencia de usuario fluida", "Hosting y dominio gratis 1 año"],
+    icon: "🛍️",
   },
 ];
 ---
 
-<section id="servicios" class="py-24 bg-[#050810] relative overflow-hidden">
-  
-  <div class="absolute inset-0 z-0">
-    <div class="absolute inset-0 opacity-[0.15]" 
-         style="background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 40px, #1e293b 41px, #1e293b 42px);">
-    </div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[120px] animate-pulse"></div>
+<section id="servicios" class="relative overflow-hidden min-h-screen"
+         style="background: linear-gradient(135deg, #0c3b30 0%, #0a2638 38%, #0a1f31 70%, #0b2740 100%);">
+
+  <!-- Glows de marca -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute -bottom-40 -left-40 w-[700px] h-[700px] bg-[#2bbf4f]/12 rounded-full blur-[170px]"></div>
+    <div class="absolute -top-32 -right-24 w-[600px] h-[600px] bg-[#1f6dd0]/15 rounded-full blur-[160px]"></div>
   </div>
 
-  <div class="container mx-auto px-6 relative z-10">
-    
-    <div class="text-center mb-20">
-      <h2 class="text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase">
-        Soluciones <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400">Digitales</span>
-      </h2>
-      <p class="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
-        Transformamos tu marca personal en una <span class="text-white">máquina de ventas</span> con tecnología de última generación.
-      </p>
-    </div>
+  <!-- Figura ∞ a frame completo (detrás del menú) -->
+  <div class="svc-viewport absolute inset-0 z-0 overflow-hidden">
+    <div class="svc-plane absolute inset-0">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto items-stretch">
-      {services.map((item) => (
-        <div class={`group relative p-[1px] rounded-[2.5rem] transition-all duration-500 hover:scale-[1.03] ${item.isFeatured ? 'lg:scale-105 z-20' : 'z-10'}`}>
-          
-          <div class={`absolute inset-0 rounded-[2.5rem] bg-gradient-to-br ${item.gradient} opacity-30 group-hover:opacity-100 transition-opacity blur-[2px]`}></div>
-          
-          <div class="relative h-full w-full bg-[#0a0f1d]/90 backdrop-blur-3xl rounded-[2.5rem] p-10 flex flex-col border border-white/5">
-            
-            {item.isFeatured && (
-              <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-500 text-[#050810] text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(6,182,212,0.5)]">
-                MÁS POPULAR
-              </div>
-            )}
+      <!-- ∞ gigante de fondo -->
+      <svg class="svc-ring absolute left-0 top-0" style="overflow:visible" aria-hidden="true">
+        <defs>
+          <linearGradient id="svcRingGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#16347a"/>
+            <stop offset="0.45" stop-color="#2563eb"/>
+            <stop offset="0.75" stop-color="#3b9eff"/>
+            <stop offset="1" stop-color="#8fd2ff"/>
+          </linearGradient>
+        </defs>
+        <path class="svc-ring-body" fill="none" stroke="url(#svcRingGrad)" stroke-linejoin="round" stroke-linecap="round" opacity="0.92"></path>
+        <path class="svc-ring-sheen" fill="none" stroke="#cfe8ff" stroke-linecap="round" opacity="0.35"></path>
+        <path class="svc-ring-flow" fill="none" stroke="#ffffff" stroke-linecap="round" pathLength="100" stroke-dasharray="3 97" opacity="0.85"></path>
+        <path class="svc-ring-flow2" fill="none" stroke="#9fd8ff" stroke-linecap="round" pathLength="100" stroke-dasharray="2 98" opacity="0.7"></path>
+      </svg>
 
-            <div class="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 mx-auto shadow-inner group-hover:bg-white/10 transition-colors">
-              {item.icon === 'ai' && (
-                <svg class={`w-10 h-10 ${item.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  {/* Chip / procesador que representa la IA */}
-                  <rect x="7" y="7" width="10" height="10" rx="2" />
-                  <path stroke-linecap="round" d="M10.5 10.5h3v3h-3z" class="opacity-60" />
-                  <path stroke-linecap="round" d="M9 3v2M12 3v2M15 3v2M9 19v2M12 19v2M15 19v2M3 9h2M3 12h2M3 15h2M19 9h2M19 12h2M19 15h2" />
+      <!-- Nodos por servicio -->
+      {services.map((_, i) => (
+        <span class="svc-node absolute" data-node={i} aria-hidden="true"></span>
+      ))}
+
+      <!-- Paneles por servicio -->
+      {services.map((s) => (
+        <div
+          id={`svc-panel-${s.id}`}
+          role="tabpanel"
+          aria-labelledby={`svc-tab-${s.id}`}
+          class="svc-panel absolute flex items-center"
+        >
+          <div class="w-full max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-widest text-[#8fd2ff] mb-3">{s.subtitle}</p>
+              <h3 class="font-sn text-2xl md:text-4xl font-extrabold -tracking-[0.02em] text-white leading-tight mb-4">{s.title}</h3>
+              <p class="text-slate-300/90 text-sm md:text-base leading-relaxed mb-6 max-w-xl">{s.description}</p>
+              <ul class="space-y-2.5 mb-8">
+                {s.features.map((f) => (
+                  <li class="flex items-center gap-3 text-slate-200 text-sm font-medium">
+                    <svg class="w-5 h-5 shrink-0 text-[#3b9eff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+                      <circle cx="12" cy="12" r="9" class="opacity-30" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <a href="/contacto"
+                 class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#62d84e] text-[#04140c] font-bold text-sm hover:bg-[#74e85f] transition-colors shadow-[0_10px_30px_rgba(98,216,78,0.25)]">
+                Cotizar proyecto
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
-              )}
-              {item.icon === 'shield' && (
-                <svg class={`w-10 h-10 ${item.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  {/* Escudo con check: seguridad e integridad */}
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
-                </svg>
-              )}
-              {item.icon === 'automation' && (<svg class={`w-10 h-10 ${item.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                {/* Círculo de órbita que sugiere proceso continuo */}
-                <circle cx="12" cy="12" r="8" class="opacity-30" stroke-dasharray="4 4" />
-              </svg>
-            )}
-              {item.icon === 'database' && <svg class="w-10 h-10 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>}
-                          {item.icon === 'dashboard' && (
-                <svg class={`w-10 h-10 ${item.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  {/* Marco del Dashboard */}
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h.188c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125h-.188A1.125 1.125 0 013 19.875v-6.75zM7.5 9.75C7.5 9.129 8.004 8.625 8.625 8.625h.188c.621 0 1.125.504 1.125 1.125v10.125c0 .621-.504 1.125-1.125 1.125h-.188A1.125 1.125 0 017.5 19.875V9.75zM12 3c.621 0 1.125.504 1.125 1.125v16.875c0 .621-.504 1.125-1.125 1.125h-.188a1.125 1.125 0 01-1.125-1.125V4.125C9.375 3.504 9.879 3 12 3zM16.5 16.125c0-.621.504-1.125 1.125-1.125h.188c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-.188a1.125 1.125 0 01-1.125-1.125v-3.75zM21 12c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125h-.188a1.125 1.125 0 01-1.125-1.125v-6.75C19.875 12.504 20.379 12 21 12z" />
-                  {/* Línea de tendencia/control superior */}
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5l4.5-4.5M10.5 3l4.5 4.5M16.5 13.5L21 9" class="opacity-40" stroke-width="1" />
-                </svg>
-              )}
+              </a>
             </div>
-
-            <h3 class="text-3xl font-black text-white text-center mb-2 tracking-tight">{item.title}</h3>
-            <p class="text-xs text-cyan-400 font-bold uppercase tracking-widest text-center mb-6">{item.subtitle}</p>
-            <p class="text-slate-400 text-sm text-center mb-8 leading-relaxed flex-grow">{item.description}</p>
-
-            <ul class="space-y-4 mb-10">
-              {item.features.map((feature) => (
-                <li class="flex items-center gap-3 text-slate-200 text-xs font-medium">
-                  <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,1)]"></span>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <a href="#contacto" class={`relative overflow-hidden py-4 rounded-full font-black text-xs uppercase tracking-widest transition-all duration-300 text-center ${item.isFeatured ? 'bg-cyan-500 text-[#050810] hover:bg-white shadow-[0_10px_30px_rgba(6,182,212,0.3)]' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'}`}>
-              Cotizar Proyecto
-            </a>
+            <div class="hidden lg:flex relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm h-[300px] items-center justify-center p-8 shadow-2xl">
+              <div class="absolute -bottom-16 -right-10 w-60 h-60 bg-[#3b9eff]/20 blur-[90px] rounded-full"></div>
+              <div class="relative w-[230px] bg-white rounded-2xl shadow-2xl p-5">
+                <div class="w-10 h-10 rounded-xl bg-[#3b9eff]/15 flex items-center justify-center text-[#1e5fd0] text-xl mb-3">{s.icon}</div>
+                <p class="text-[#0a0f1d] text-sm font-bold leading-tight mb-3">{s.tab}</p>
+                <div class="space-y-2">
+                  {s.features.slice(0, 3).map((f) => (
+                    <div class="flex items-center gap-2">
+                      <span class="w-4 h-4 rounded-full bg-[#3b9eff]/15 text-[#1e5fd0] text-[10px] flex items-center justify-center shrink-0">✓</span>
+                      <span class="text-slate-500 text-[11px] leading-tight">{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ))}
     </div>
   </div>
+
+  <!-- Menú (overlay por encima de la figura) -->
+  <div class="relative z-20 pt-8 px-3 sm:px-4 lg:px-6">
+    <div class="svc-tablist relative flex w-full p-2 rounded-full bg-[#091627]/55 backdrop-blur-md border border-white/10 shadow-2xl"
+         role="tablist" aria-label="Servicios de SurCode">
+      <span class="svc-indicator absolute top-2 bottom-2 left-0 rounded-full bg-white shadow-lg" aria-hidden="true"></span>
+      {services.map((s, i) => (
+        <button
+          role="tab"
+          id={`svc-tab-${s.id}`}
+          data-tab={s.id}
+          aria-controls={`svc-panel-${s.id}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? "0" : "-1"}
+          class="svc-tab relative z-10 flex-1 text-center whitespace-nowrap px-3 py-3.5 rounded-full text-sm md:text-base font-bold transition-colors duration-300"
+        >
+          {s.tab}
+        </button>
+      ))}
+    </div>
+  </div>
+
 </section>
 
-<style>
-  /* Animación de rotación lenta para el fondo radial */
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+<script>
+  const root = document.getElementById('servicios');
+  if (root) {
+    const tablist = root.querySelector('.svc-tablist') as HTMLElement;
+    const tabs = Array.from(root.querySelectorAll<HTMLElement>('[role="tab"]'));
+    const indicator = root.querySelector('.svc-indicator') as HTMLElement;
+    const viewport = root.querySelector('.svc-viewport') as HTMLElement;
+    const plane = root.querySelector('.svc-plane') as HTMLElement;
+    const ring = root.querySelector('.svc-ring') as SVGElement;
+    const ringPaths = Array.from(root.querySelectorAll<SVGPathElement>('.svc-ring path'));
+    const ringBody = root.querySelector('.svc-ring-body') as SVGPathElement;
+    const ringSheen = root.querySelector('.svc-ring-sheen') as SVGPathElement;
+    const ringFlow = root.querySelector('.svc-ring-flow') as SVGPathElement;
+    const ringFlow2 = root.querySelector('.svc-ring-flow2') as SVGPathElement;
+    const nodes = Array.from(root.querySelectorAll<HTMLElement>('.svc-node'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.svc-panel'));
+    const N = tabs.length;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let active = 0;
+    let vw = 0, vh = 0, Sx = 0, Sy = 0;
+    let pts: { x: number; y: number }[] = [];
+    const TWO_PI = Math.PI * 2;
+    const OFFSET = 0;
+
+    function lem(t: number, cx: number, cy: number) {
+      const s = Math.sin(t), c = Math.cos(t), d = 1 + s * s;
+      return { x: cx + Sx * (c / d), y: cy + Sy * (s * c / d) };
+    }
+
+    function layout() {
+      vw = viewport.clientWidth;
+      vh = viewport.clientHeight;
+      Sx = Math.max(vw * 1.26, 900); // ancho del ∞ (triple de grande)
+      Sy = Sx * 1.6;
+      const cx = vw / 2, cy = vh / 2;
+
+      pts = [];
+      for (let i = 0; i < N; i++) pts.push(lem(OFFSET + (i / N) * TWO_PI, cx, cy));
+
+      let d = '';
+      const SEG = 180;
+      for (let k = 0; k <= SEG; k++) {
+        const p = lem((k / SEG) * TWO_PI, cx, cy);
+        d += (k === 0 ? 'M' : 'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ' ';
+      }
+      d += 'Z';
+      ring.style.width = `${vw}px`;
+      ring.style.height = `${vh}px`;
+      ringPaths.forEach((p) => p.setAttribute('d', d));
+      ringBody.style.strokeWidth = `${Sx * 0.20}px`;
+      ringSheen.style.strokeWidth = `${Sx * 0.10}px`;
+      ringFlow.style.strokeWidth = `${Math.max(Sx * 0.03, 4)}px`;
+      ringFlow2.style.strokeWidth = `${Math.max(Sx * 0.015, 2)}px`;
+
+      nodes.forEach((n, i) => { n.style.left = `${pts[i].x}px`; n.style.top = `${pts[i].y}px`; });
+      panels.forEach((p, i) => {
+        p.style.left = `${pts[i].x - vw / 2}px`;
+        p.style.top = `${pts[i].y - vh / 2}px`;
+        p.style.width = `${vw}px`;
+        p.style.height = `${vh}px`;
+      });
+    }
+
+    function panTo(i: number, animate: boolean) {
+      const tx = vw / 2 - pts[i].x;
+      const ty = vh / 2 - pts[i].y;
+      if (!animate || reduce) {
+        plane.style.transition = 'none';
+        plane.style.transform = `translate(${tx}px, ${ty}px)`;
+        void plane.offsetWidth;
+        plane.style.transition = '';
+      } else {
+        plane.style.transform = `translate(${tx}px, ${ty}px)`;
+      }
+    }
+
+    function moveIndicator(i: number) {
+      const t = tabs[i];
+      if (!indicator || !t) return;
+      indicator.style.transform = `translateX(${t.offsetLeft}px)`;
+      indicator.style.width = `${t.offsetWidth}px`;
+    }
+
+    function highlightNode(i: number) {
+      nodes.forEach((n, idx) => n.classList.toggle('is-active', idx === i));
+    }
+
+    function activate(i: number, animate = true) {
+      active = i;
+      tabs.forEach((t, idx) => {
+        const on = idx === i;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      moveIndicator(i);
+      panTo(i, animate);
+      highlightNode(i);
+    }
+
+    tabs.forEach((t, i) => t.addEventListener('click', () => activate(i)));
+    tablist?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const dir = e.key === 'ArrowRight' ? 1 : -1;
+      const i = (active + dir + tabs.length) % tabs.length;
+      activate(i);
+      tabs[i].focus({ preventScroll: true });
+    });
+
+    layout();
+    activate(0, false);
+    requestAnimationFrame(() => { layout(); moveIndicator(0); panTo(0, false); });
+    (document as any).fonts?.ready?.then(() => moveIndicator(active));
+
+    let rT: number | null = null;
+    window.addEventListener('resize', () => {
+      if (rT) cancelAnimationFrame(rT);
+      rT = requestAnimationFrame(() => { layout(); moveIndicator(active); panTo(active, false); });
+    }, { passive: true });
   }
-  
-  /* Puedes añadir un script para revelar las tarjetas al hacer scroll */
+</script>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+
+  .svc-tab { color: #ffffff; }
+  .svc-tab[aria-selected="true"] { color: #091627; }
+  .svc-indicator {
+    transition: transform .45s cubic-bezier(.22,1,.36,1), width .45s cubic-bezier(.22,1,.36,1);
+    width: 0;
+  }
+
+  .svc-plane {
+    transition: transform 1.25s cubic-bezier(.65, 0, .35, 1);
+    will-change: transform;
+  }
+
+  /* ∞: cinta azul con glow + luz en movimiento */
+  .svc-ring { filter: drop-shadow(0 0 32px rgba(59,158,255,0.40)); }
+  .svc-ring-flow  { animation: svc-ring-flow 5s linear infinite; }
+  .svc-ring-flow2 { animation: svc-ring-flow 8s linear infinite reverse; }
+  @keyframes svc-ring-flow { to { stroke-dashoffset: -100; } }
+  .svc-ring-sheen { animation: svc-sheen 6s ease-in-out infinite; }
+  @keyframes svc-sheen { 0%,100% { opacity: .22; } 50% { opacity: .5; } }
+
+  .svc-node {
+    width: 12px; height: 12px; border-radius: 9999px;
+    background: #bfe3ff; transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 4px rgba(59,158,255,0.18);
+    transition: box-shadow .4s ease, background .4s ease;
+  }
+  .svc-node.is-active {
+    background: #ffffff;
+    box-shadow: 0 0 18px 4px rgba(59,158,255,0.75), 0 0 0 6px rgba(59,158,255,0.22);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svc-indicator, .svc-plane { transition: none; }
+    .svc-ring-flow, .svc-ring-flow2, .svc-ring-sheen { animation: none; }
+  }
 </style>
