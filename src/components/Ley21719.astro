@@ -40,7 +40,7 @@ const PLATAFORMA_URL = "#contacto";
         <div class="flex justify-center">
           <a href={PLATAFORMA_URL}
              class="group inline-flex items-center gap-2 text-white font-bold text-sm hover:text-[#62d84e] transition-colors">
-            Conoce la plataforma
+            Conoce nuestra plataforma
             <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
@@ -49,19 +49,21 @@ const PLATAFORMA_URL = "#contacto";
       </div>
 
       <!-- Columna derecha: panel visual -->
-      <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl min-h-[420px] flex flex-col justify-end">
-        <!-- Fondo del panel -->
-        <div class="absolute inset-0 bg-gradient-to-br from-[#0a3a2a] via-[#06283f] to-[#0a4d8f]"></div>
-        <div class="absolute inset-0 opacity-[0.18]"
+      <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl min-h-[480px]">
+        <!-- Fondo degradado del panel -->
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0c2a22] via-[#0a2640] to-[#142a63]"></div>
+        <div class="absolute inset-0 opacity-[0.12]"
              style="background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 38px, #334155 39px, #334155 40px);"></div>
-        <!-- Ícono escudo decorativo -->
-        <svg class="absolute -top-6 -right-6 w-56 h-56 text-[#62d84e]/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
-        </svg>
+        <!-- Glow verde decorativo -->
+        <div class="absolute -bottom-16 -right-10 w-72 h-72 bg-[#62d84e]/25 blur-[110px] rounded-full"></div>
+
+        <!-- Ejecutiva (avatar circular) en la esquina inferior derecha -->
+        <img src="/ejecutiva-circulo.webp" alt="Ejecutiva supervisando el cumplimiento de datos"
+             class="absolute bottom-5 right-5 w-32 sm:w-40 md:w-44 aspect-square rounded-full object-cover ring-2 ring-white/20 shadow-2xl z-20 select-none pointer-events-none"
+             loading="lazy" decoding="async" width="900" height="900" />
 
         <!-- Contenido superpuesto -->
-        <div class="relative p-8 md:p-10">
+        <div class="relative z-20 p-8 md:p-10">
           <p class="font-sn text-3xl md:text-4xl font-extrabold -tracking-[0.02em] leading-tight mb-6">
             <span class="text-[#62d84e]">Protege los datos.</span><br>
             <span class="text-white">Evita las multas.</span>
@@ -80,7 +82,7 @@ const PLATAFORMA_URL = "#contacto";
         </div>
 
         <!-- Barra de progreso verde (se llena según el tiempo transcurrido) -->
-        <div class="relative h-1.5 bg-white/10">
+        <div class="absolute bottom-0 inset-x-0 h-1.5 bg-white/10 z-30">
           <div id="ley-progress" class="h-full bg-[#62d84e] transition-[width] duration-1000" style="width:0%"></div>
         </div>
       </div>
@@ -179,6 +181,7 @@ const PLATAFORMA_URL = "#contacto";
     const c2 = [101, 88, 196];  // #6558c4 (púrpura suave, ya revelado)
     const lerp = (a: number, b: number, t: number) => Math.round(a + (b - a) * t);
     const ease = (t: number) => t * t * (3 - 2 * t); // suaviza el inicio y el final
+    const clamp = (t: number) => Math.min(1, Math.max(0, t));
     let ticking = false;
     const update = () => {
       ticking = false;
@@ -187,11 +190,17 @@ const PLATAFORMA_URL = "#contacto";
       // Progreso: 0 cuando el borde superior entra por abajo (rect.top = vh),
       // 1 cuando ese borde llega arriba (rect.top = 0). El púrpura nace en ese tramo.
       let p = 1 - rect.top / vh;
-      p = ease(Math.min(1, Math.max(0, p)));
+      p = ease(clamp(p));
       const r = lerp(c1[0], c2[0], p);
       const g = lerp(c1[1], c2[1], p);
       const b = lerp(c1[2], c2[2], p);
       section.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+      // Parallax sutil de la ejecutiva: se eleva ~28px conforme pasa la sección
+      if (mujer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const pr = clamp((vh - rect.top) / (rect.height + vh));
+        mujer.style.transform = `translateY(${(0.5 - pr) * 56}px)`;
+      }
     };
     const onScroll = () => {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
