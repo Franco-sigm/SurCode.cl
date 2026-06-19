@@ -59,20 +59,26 @@ const services = [
   <div class="svc-viewport absolute inset-0 z-0 overflow-hidden">
     <div class="svc-plane absolute inset-0">
 
-      <!-- ∞ gigante de fondo -->
+      <!-- ∞ gigante: tubo 3D + franjas satinadas paralelas + 3 destellos -->
       <svg class="svc-ring absolute left-0 top-0" style="overflow:visible" aria-hidden="true">
         <defs>
-          <linearGradient id="svcRingGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#16347a"/>
-            <stop offset="0.45" stop-color="#2563eb"/>
-            <stop offset="0.75" stop-color="#3b9eff"/>
-            <stop offset="1" stop-color="#8fd2ff"/>
+          <linearGradient id="svcRingGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8ec8ff"/>
+            <stop offset="0.45" stop-color="#2f6fed"/>
+            <stop offset="0.78" stop-color="#163b9c"/>
+            <stop offset="1" stop-color="#0c1f54"/>
           </linearGradient>
         </defs>
-        <path class="svc-ring-body" fill="none" stroke="url(#svcRingGrad)" stroke-linejoin="round" stroke-linecap="round" opacity="0.92"></path>
-        <path class="svc-ring-sheen" fill="none" stroke="#cfe8ff" stroke-linecap="round" opacity="0.35"></path>
-        <path class="svc-ring-flow" fill="none" stroke="#ffffff" stroke-linecap="round" pathLength="100" stroke-dasharray="3 97" opacity="0.85"></path>
-        <path class="svc-ring-flow2" fill="none" stroke="#9fd8ff" stroke-linecap="round" pathLength="100" stroke-dasharray="2 98" opacity="0.7"></path>
+        <!-- Cuerpo con degradado vertical -->
+        <path class="svc-ring-body" fill="none" stroke="url(#svcRingGrad)" stroke-linejoin="round" stroke-linecap="round"></path>
+        <!-- Franjas satinadas (paralelas, desplazadas a lo ancho) -->
+        <path class="svc-stripe svc-stripe-d" fill="none" stroke="#0f2f6e" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path>
+        <path class="svc-stripe svc-stripe-l" fill="none" stroke="#d7ecff" stroke-linecap="round" stroke-linejoin="round" opacity="0.42"></path>
+        <path class="svc-stripe svc-stripe-m" fill="none" stroke="#5b8de8" stroke-linecap="round" stroke-linejoin="round" opacity="0.38"></path>
+        <!-- Pelos finos que recorren el ∞ de forma aleatoria -->
+        {[0,1,2,3,4,5].map(() => (
+          <path class="svc-hair" fill="none" stroke="#e6f4ff" stroke-linecap="round" pathLength="100"></path>
+        ))}
       </svg>
 
       <!-- Nodos por servicio -->
@@ -135,7 +141,7 @@ const services = [
 
   <!-- Menú (overlay por encima de la figura) -->
   <div class="relative z-20 pt-8 px-3 sm:px-4 lg:px-6">
-    <div class="svc-tablist relative flex w-full p-2 rounded-full bg-[#091627]/55 backdrop-blur-md border border-white/10 shadow-2xl"
+    <div class="svc-tablist relative flex w-full p-2 rounded-full bg-[#091627]/75 border border-white/10 shadow-2xl"
          role="tablist" aria-label="Servicios de SurCode">
       <span class="svc-indicator absolute top-2 bottom-2 left-0 rounded-full bg-white shadow-lg" aria-hidden="true"></span>
       {services.map((s, i) => (
@@ -165,11 +171,22 @@ const services = [
     const viewport = root.querySelector('.svc-viewport') as HTMLElement;
     const plane = root.querySelector('.svc-plane') as HTMLElement;
     const ring = root.querySelector('.svc-ring') as SVGElement;
-    const ringPaths = Array.from(root.querySelectorAll<SVGPathElement>('.svc-ring path'));
     const ringBody = root.querySelector('.svc-ring-body') as SVGPathElement;
-    const ringSheen = root.querySelector('.svc-ring-sheen') as SVGPathElement;
-    const ringFlow = root.querySelector('.svc-ring-flow') as SVGPathElement;
-    const ringFlow2 = root.querySelector('.svc-ring-flow2') as SVGPathElement;
+    const stripeD = root.querySelector('.svc-stripe-d') as SVGPathElement;
+    const stripeL = root.querySelector('.svc-stripe-l') as SVGPathElement;
+    const stripeM = root.querySelector('.svc-stripe-m') as SVGPathElement;
+
+    // Pelos finos: parámetros aleatorios fijos (offset, dash, velocidad, fase, sentido)
+    const hairsEls = Array.from(root.querySelectorAll<SVGPathElement>('.svc-hair'));
+    const hairParams = hairsEls.map((h) => {
+      const seg = 4 + Math.random() * 8;
+      h.style.animationDuration = `${(4 + Math.random() * 7).toFixed(2)}s`;
+      h.style.animationDelay = `${(-Math.random() * 12).toFixed(2)}s`;
+      if (Math.random() < 0.5) h.style.animationDirection = 'reverse';
+      h.style.opacity = (0.35 + Math.random() * 0.5).toFixed(2);
+      h.setAttribute('stroke-dasharray', `${seg.toFixed(1)} ${(100 - seg).toFixed(1)}`);
+      return { off: (Math.random() * 2 - 1) * 0.42 }; // posición aleatoria a lo ancho
+    });
     const nodes = Array.from(root.querySelectorAll<HTMLElement>('.svc-node'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('.svc-panel'));
     const N = tabs.length;
@@ -196,20 +213,44 @@ const services = [
       pts = [];
       for (let i = 0; i < N; i++) pts.push(lem(OFFSET + (i / N) * TWO_PI, cx, cy));
 
-      let d = '';
-      const SEG = 180;
+      // Muestreo de puntos y normales del ∞ (para caminos desplazados a lo ancho)
+      const SEG = 300; // alta resolución → curva bien redonda (sin costo de filtros)
+      const Ps: { x: number; y: number }[] = [];
+      const Ns: { x: number; y: number }[] = [];
       for (let k = 0; k <= SEG; k++) {
-        const p = lem((k / SEG) * TWO_PI, cx, cy);
-        d += (k === 0 ? 'M' : 'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ' ';
+        const t = (k / SEG) * TWO_PI;
+        const p = lem(t, cx, cy);
+        const p2 = lem(t + 1e-3, cx, cy);
+        let nx = -(p2.y - p.y), ny = (p2.x - p.x);
+        const L = Math.hypot(nx, ny) || 1;
+        Ps.push(p); Ns.push({ x: nx / L, y: ny / L });
       }
-      d += 'Z';
+      // Construye el path del ∞ desplazado `off` px en dirección normal
+      const dOff = (off: number) => {
+        let s = '';
+        for (let k = 0; k < Ps.length; k++) {
+          const x = Ps[k].x + Ns[k].x * off, y = Ps[k].y + Ns[k].y * off;
+          s += (k === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+        }
+        return s + 'Z';
+      };
+
       ring.style.width = `${vw}px`;
       ring.style.height = `${vh}px`;
-      ringPaths.forEach((p) => p.setAttribute('d', d));
-      ringBody.style.strokeWidth = `${Sx * 0.20}px`;
-      ringSheen.style.strokeWidth = `${Sx * 0.10}px`;
-      ringFlow.style.strokeWidth = `${Math.max(Sx * 0.03, 4)}px`;
-      ringFlow2.style.strokeWidth = `${Math.max(Sx * 0.015, 2)}px`;
+
+      const W = Sx * 0.20;        // ancho del tubo
+      const center = dOff(0);
+      ringBody.setAttribute('d', center); ringBody.style.strokeWidth = `${W}px`;
+      // Franjas satinadas a distintos offsets del ancho
+      stripeD.setAttribute('d', dOff(W * 0.22)); stripeD.style.strokeWidth = `${W * 0.16}px`;
+      stripeL.setAttribute('d', dOff(-W * 0.20)); stripeL.style.strokeWidth = `${W * 0.14}px`;
+      stripeM.setAttribute('d', dOff(W * 0.03)); stripeM.style.strokeWidth = `${W * 0.12}px`;
+      // Pelos finos en posiciones aleatorias del ancho (delgados como cabellos)
+      const hairW = Math.max(W * 0.01, 1);
+      hairsEls.forEach((h, i) => {
+        h.setAttribute('d', dOff(W * hairParams[i].off));
+        h.style.strokeWidth = `${hairW}px`;
+      });
 
       nodes.forEach((n, i) => { n.style.left = `${pts[i].x}px`; n.style.top = `${pts[i].y}px`; });
       panels.forEach((p, i) => {
@@ -320,13 +361,10 @@ const services = [
     transform: translateY(0);
   }
 
-  /* ∞: cinta azul con glow + luz en movimiento */
-  .svc-ring { filter: drop-shadow(0 0 32px rgba(59,158,255,0.40)); }
-  .svc-ring-flow  { animation: svc-ring-flow 5s linear infinite; }
-  .svc-ring-flow2 { animation: svc-ring-flow 8s linear infinite reverse; }
+  /* ∞: tubo 3D (sin filtros pesados sobre la figura gigante → rendimiento) */
+  /* Pelos finos que recorren el ∞ (velocidad/fase/sentido aleatorios vía inline) */
+  .svc-hair { animation: svc-ring-flow 6s linear infinite; }
   @keyframes svc-ring-flow { to { stroke-dashoffset: -100; } }
-  .svc-ring-sheen { animation: svc-sheen 6s ease-in-out infinite; }
-  @keyframes svc-sheen { 0%,100% { opacity: .22; } 50% { opacity: .5; } }
 
   .svc-node {
     width: 12px; height: 12px; border-radius: 9999px;
@@ -341,6 +379,6 @@ const services = [
 
   @media (prefers-reduced-motion: reduce) {
     .svc-indicator, .svc-plane, .svc-panel { transition: none; }
-    .svc-ring-flow, .svc-ring-flow2, .svc-ring-sheen { animation: none; }
+    .svc-hair { animation: none; }
   }
 </style>
