@@ -79,30 +79,25 @@ const items = services.map((s) => ({
     <div class="absolute -top-32 -right-24 w-[600px] h-[600px] bg-[#1f6dd0]/15 rounded-full blur-[160px]"></div>
   </div>
 
-  <!-- Figura ∞ a frame completo (detrás del menú) -->
+  <!-- Red / constelación a frame completo (detrás del menú). Viajas por ella al cambiar de servicio. -->
   <div class="svc-viewport absolute inset-0 z-0 overflow-hidden">
     <div class="svc-plane absolute inset-0">
 
-      <!-- ∞ gigante: tubo 3D + franjas satinadas paralelas + 3 destellos -->
-      <svg class="svc-ring absolute left-0 top-0" style="overflow:visible" aria-hidden="true">
+      <!-- Red espacial: estrellas de fondo + filamentos + columna que conecta los servicios + pulso de datos -->
+      <svg class="svc-net absolute left-0 top-0" style="overflow:visible" aria-hidden="true">
         <defs>
-          <linearGradient id="svcRingGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#8ec8ff"/>
-            <stop offset="0.45" stop-color="#2f6fed"/>
-            <stop offset="0.78" stop-color="#163b9c"/>
-            <stop offset="1" stop-color="#0c1f54"/>
+          <linearGradient id="svcSpineGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#56b3ff"/>
+            <stop offset="0.5" stop-color="#3b9eff"/>
+            <stop offset="1" stop-color="#2bd4a8"/>
           </linearGradient>
         </defs>
-        <!-- Cuerpo con degradado vertical -->
-        <path class="svc-ring-body" fill="none" stroke="url(#svcRingGrad)" stroke-linejoin="round" stroke-linecap="round"></path>
-        <!-- Franjas satinadas (paralelas, desplazadas a lo ancho) -->
-        <path class="svc-stripe svc-stripe-d" fill="none" stroke="#0f2f6e" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path>
-        <path class="svc-stripe svc-stripe-l" fill="none" stroke="#d7ecff" stroke-linecap="round" stroke-linejoin="round" opacity="0.42"></path>
-        <path class="svc-stripe svc-stripe-m" fill="none" stroke="#5b8de8" stroke-linecap="round" stroke-linejoin="round" opacity="0.38"></path>
-        <!-- Pelos finos que recorren el ∞ de forma aleatoria -->
-        {[0,1,2,3,4,5].map(() => (
-          <path class="svc-hair" fill="none" stroke="#e6f4ff" stroke-linecap="round" pathLength="100"></path>
-        ))}
+        <g class="svc-stars"></g>          <!-- estrellas de fondo (generadas en JS) -->
+        <g class="svc-filaments"></g>      <!-- líneas finas hub→estrella (constelación) -->
+        <path class="svc-spine" fill="none" stroke="url(#svcSpineGrad)"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+        <path class="svc-spine-glow" fill="none" stroke="#dff3ff"
+              stroke-linejoin="round" stroke-linecap="round" pathLength="100"></path>
       </svg>
 
       <!-- Nodos por servicio -->
@@ -211,22 +206,23 @@ const items = services.map((s) => ({
     const indicator = root.querySelector('.svc-indicator') as HTMLElement;
     const viewport = root.querySelector('.svc-viewport') as HTMLElement;
     const plane = root.querySelector('.svc-plane') as HTMLElement;
-    const ring = root.querySelector('.svc-ring') as SVGElement;
-    const ringBody = root.querySelector('.svc-ring-body') as SVGPathElement;
-    const stripeD = root.querySelector('.svc-stripe-d') as SVGPathElement;
-    const stripeL = root.querySelector('.svc-stripe-l') as SVGPathElement;
-    const stripeM = root.querySelector('.svc-stripe-m') as SVGPathElement;
+    const net = root.querySelector('.svc-net') as SVGElement;
+    const starsG = root.querySelector('.svc-stars') as SVGGElement;
+    const filG = root.querySelector('.svc-filaments') as SVGGElement;
+    const spine = root.querySelector('.svc-spine') as SVGPathElement;
+    const spineGlow = root.querySelector('.svc-spine-glow') as SVGPathElement;
 
-    // Pelos finos: parámetros aleatorios fijos (offset, dash, velocidad, fase, sentido)
-    const hairsEls = Array.from(root.querySelectorAll<SVGPathElement>('.svc-hair'));
-    const hairParams = hairsEls.map((h) => {
-      const seg = 4 + Math.random() * 8;
-      h.style.animationDuration = `${(4 + Math.random() * 7).toFixed(2)}s`;
-      h.style.animationDelay = `${(-Math.random() * 12).toFixed(2)}s`;
-      if (Math.random() < 0.5) h.style.animationDirection = 'reverse';
-      h.style.opacity = (0.35 + Math.random() * 0.5).toFixed(2);
-      h.setAttribute('stroke-dasharray', `${seg.toFixed(1)} ${(100 - seg).toFixed(1)}`);
-      return { off: (Math.random() * 2 - 1) * 0.42 }; // posición aleatoria a lo ancho
+    // Campo de estrellas: posición/tamaño/brillo aleatorios FIJOS (profundidad: lejanas = pequeñas y tenues)
+    const STAR_COUNT = 150;
+    const stars = Array.from({ length: STAR_COUNT }, () => {
+      const depth = Math.random(); // 0 = lejana, 1 = cercana
+      return {
+        nx: (Math.random() * 2 - 1) * 1.3,   // posición normalizada en el campo
+        ny: (Math.random() * 2 - 1) * 1.3,
+        r: 0.6 + depth * 1.8,
+        o: 0.12 + depth * 0.55,
+        tw: Math.random() < 0.28,            // ~28% titilan suavemente
+      };
     });
     const nodes = Array.from(root.querySelectorAll<HTMLElement>('.svc-node'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('.svc-panel'));
@@ -246,64 +242,54 @@ const items = services.map((s) => ({
     });
 
     let active = 0;
-    let vw = 0, vh = 0, Sx = 0, Sy = 0;
+    let vw = 0, vh = 0;
     let pts: { x: number; y: number }[] = [];
     const TWO_PI = Math.PI * 2;
-    const OFFSET = 0;
-
-    function lem(t: number, cx: number, cy: number) {
-      const s = Math.sin(t), c = Math.cos(t), d = 1 + s * s;
-      return { x: cx + Sx * (c / d), y: cy + Sy * (s * c / d) };
-    }
 
     function layout() {
       vw = viewport.clientWidth;
       vh = viewport.clientHeight;
-      Sx = Math.max(vw * 1.26, 900); // ancho del ∞ (triple de grande)
-      Sy = Sx * 1.6;
       const cx = vw / 2, cy = vh / 2;
 
+      // Hubs de servicio: anillo irregular alrededor del centro → al cambiar de servicio
+      // el desplazamiento va en direcciones variadas (arriba/abajo/lados).
       pts = [];
-      for (let i = 0; i < N; i++) pts.push(lem(OFFSET + (i / N) * TWO_PI, cx, cy));
-
-      // Muestreo de puntos y normales del ∞ (para caminos desplazados a lo ancho)
-      const SEG = 300; // alta resolución → curva bien redonda (sin costo de filtros)
-      const Ps: { x: number; y: number }[] = [];
-      const Ns: { x: number; y: number }[] = [];
-      for (let k = 0; k <= SEG; k++) {
-        const t = (k / SEG) * TWO_PI;
-        const p = lem(t, cx, cy);
-        const p2 = lem(t + 1e-3, cx, cy);
-        let nx = -(p2.y - p.y), ny = (p2.x - p.x);
-        const L = Math.hypot(nx, ny) || 1;
-        Ps.push(p); Ns.push({ x: nx / L, y: ny / L });
+      for (let i = 0; i < N; i++) {
+        const ang = -Math.PI / 2 + (i / N) * TWO_PI;
+        const r = 0.82 + 0.18 * Math.sin(i * 2.39 + 0.7); // radio variable → disposición orgánica
+        pts.push({ x: cx + Math.cos(ang) * r * vw * 0.9, y: cy + Math.sin(ang) * r * vh * 0.78 });
       }
-      // Construye el path del ∞ desplazado `off` px en dirección normal
-      const dOff = (off: number) => {
-        let s = '';
-        for (let k = 0; k < Ps.length; k++) {
-          const x = Ps[k].x + Ns[k].x * off, y = Ps[k].y + Ns[k].y * off;
-          s += (k === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+
+      net.style.width = `${vw}px`;
+      net.style.height = `${vh}px`;
+
+      // Estrellas de fondo (a coordenadas absolutas del plano)
+      const starAbs = stars.map((s) => ({ x: cx + s.nx * vw * 1.25, y: cy + s.ny * vh * 1.25, s }));
+      let sSvg = '';
+      for (const a of starAbs) {
+        sSvg += `<circle cx="${a.x.toFixed(1)}" cy="${a.y.toFixed(1)}" r="${a.s.r.toFixed(2)}" fill="#cfe6ff" opacity="${a.s.o.toFixed(2)}"${a.s.tw ? ' class="svc-tw"' : ''}/>`;
+      }
+      starsG.innerHTML = sSvg;
+
+      // Filamentos: cada hub se conecta con sus estrellas más cercanas (efecto constelación)
+      let fSvg = '';
+      for (const p of pts) {
+        const near = starAbs
+          .map((a) => ({ a, d: (a.x - p.x) ** 2 + (a.y - p.y) ** 2 }))
+          .sort((u, v) => u.d - v.d)
+          .slice(0, 5);
+        for (const n of near) {
+          fSvg += `<line x1="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" x2="${n.a.x.toFixed(1)}" y2="${n.a.y.toFixed(1)}" stroke="#8fc6ff" stroke-width="1" opacity="0.1"/>`;
         }
-        return s + 'Z';
-      };
+      }
+      filG.innerHTML = fSvg;
 
-      ring.style.width = `${vw}px`;
-      ring.style.height = `${vh}px`;
-
-      const W = Sx * 0.20;        // ancho del tubo
-      const center = dOff(0);
-      ringBody.setAttribute('d', center); ringBody.style.strokeWidth = `${W}px`;
-      // Franjas satinadas a distintos offsets del ancho
-      stripeD.setAttribute('d', dOff(W * 0.22)); stripeD.style.strokeWidth = `${W * 0.16}px`;
-      stripeL.setAttribute('d', dOff(-W * 0.20)); stripeL.style.strokeWidth = `${W * 0.14}px`;
-      stripeM.setAttribute('d', dOff(W * 0.03)); stripeM.style.strokeWidth = `${W * 0.12}px`;
-      // Pelos finos en posiciones aleatorias del ancho (delgados como cabellos)
-      const hairW = Math.max(W * 0.01, 1);
-      hairsEls.forEach((h, i) => {
-        h.setAttribute('d', dOff(W * hairParams[i].off));
-        h.style.strokeWidth = `${hairW}px`;
-      });
+      // Columna: bucle que conecta los hubs en orden (la "vía" por la que viajas)
+      let d = '';
+      for (let i = 0; i < N; i++) d += (i ? 'L' : 'M') + pts[i].x.toFixed(1) + ' ' + pts[i].y.toFixed(1) + ' ';
+      d += 'Z';
+      spine.setAttribute('d', d);
+      spineGlow.setAttribute('d', d);
 
       nodes.forEach((n, i) => { n.style.left = `${pts[i].x}px`; n.style.top = `${pts[i].y}px`; });
       panels.forEach((p, i) => {
@@ -426,25 +412,37 @@ const items = services.map((s) => ({
     transform: scale(1.12);
   }
 
-  /* ∞: tubo 3D (sin filtros pesados sobre la figura gigante → rendimiento) */
-  /* Pelos finos que recorren el ∞ (velocidad/fase/sentido aleatorios vía inline) */
-  .svc-hair { animation: svc-ring-flow 6s linear infinite; }
-  @keyframes svc-ring-flow { to { stroke-dashoffset: -100; } }
+  /* Red espacial (sin filtros pesados → rendimiento) */
+  .svc-spine { stroke-width: 1.5px; opacity: 0.32; }
+  /* Pulso de datos que recorre la columna que conecta los servicios */
+  .svc-spine-glow {
+    stroke-width: 2.5px;
+    stroke-dasharray: 7 93;
+    animation: svc-flow 5.5s linear infinite;
+    filter: drop-shadow(0 0 4px rgba(150,210,255,0.9));
+  }
+  @keyframes svc-flow { to { stroke-dashoffset: -100; } }
+
+  /* Estrellas que titilan suavemente */
+  .svc-tw { animation: svc-twinkle 4s ease-in-out infinite; }
+  .svc-stars circle:nth-child(3n) { animation-delay: -1.3s; }
+  .svc-stars circle:nth-child(3n+1) { animation-delay: -2.6s; }
+  @keyframes svc-twinkle { 0%,100% { opacity: .18; } 50% { opacity: .75; } }
 
   .svc-node {
-    width: 12px; height: 12px; border-radius: 9999px;
-    background: #bfe3ff; transform: translate(-50%, -50%);
-    box-shadow: 0 0 0 4px rgba(59,158,255,0.18);
+    width: 14px; height: 14px; border-radius: 9999px;
+    background: #d4ecff; transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px 2px rgba(59,158,255,0.5), 0 0 0 4px rgba(59,158,255,0.18);
     transition: box-shadow .4s ease, background .4s ease;
   }
   .svc-node.is-active {
     background: #ffffff;
-    box-shadow: 0 0 18px 4px rgba(59,158,255,0.75), 0 0 0 6px rgba(59,158,255,0.22);
+    box-shadow: 0 0 24px 6px rgba(80,180,255,0.85), 0 0 0 7px rgba(59,158,255,0.25), 0 0 60px 14px rgba(43,212,168,0.35);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .svc-indicator, .svc-plane, .svc-panel { transition: none; }
-    .svc-hair { animation: none; }
+    .svc-spine-glow, .svc-tw { animation: none; }
     .svc-photo-img { transition: opacity .4s ease; transform: scale(1); }
   }
 </style>
