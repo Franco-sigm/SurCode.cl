@@ -40,7 +40,7 @@ const isContactPage = Astro.url.pathname.replace(/\/$/, '') === '/contacto';
     <!-- Tipografía del logo estilo ServiceNow -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
 
     <title>{title}</title>
     <meta name="title" content={title} />
@@ -65,10 +65,24 @@ const isContactPage = Astro.url.pathname.replace(/\/$/, '') === '/contacto';
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "SurCode",
-        "image": "https://surcode.cl/logo.png",
+        "description": "Fábrica de software en Chile: desarrollo a medida, automatización e integraciones con IA controlada y cumplimiento de la Ley 21.719 de protección de datos.",
+        "image": "https://surcode.cl/android-chrome-512x512.png",
+        "logo": "https://surcode.cl/android-chrome-512x512.png",
         "@id": "https://surcode.cl",
         "url": "https://surcode.cl",
         "telephone": "+56958100428",
+        "priceRange": "$$",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        "knowsAbout": [
+          "Desarrollo de software a medida",
+          "Automatización con inteligencia artificial",
+          "Integraciones de sistemas",
+          "Ley 21.719 de Protección de Datos Personales",
+          "Desarrollo web"
+        ],
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Santiago",

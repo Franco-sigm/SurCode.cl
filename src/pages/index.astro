@@ -11,7 +11,10 @@ import Testimonials from '../components/Testimonios.astro'
 // Aquí importaremos Services, Portfolio, etc. más adelante
 ---
 
-<Layout title="Surcode | Desarrollo Web & Software a Medida">
+<Layout
+	title="SurCode | Software a Medida, Automatización con IA y Ley 21.719 en Chile"
+	description="Fábrica de software en Chile: desarrollo a medida, automatización e integraciones con IA controlada y cumplimiento de la Ley 21.719. Agenda un diagnóstico gratis."
+>
 
 	<!-- Intro de carga estilo ServiceNow: estrella que nace al centro, se expande y revela la página -->
 	<div id="intro-splash" aria-hidden="true">
@@ -27,6 +30,46 @@ import Testimonials from '../components/Testimonios.astro'
 				  fill="url(#introStarFill)" stroke="#2f7d1f" stroke-width="5.5" stroke-linejoin="round"/>
 		</svg>
 	</div>
+
+	<!-- FAQ estructurado (Ley 21.719) para rich results en Google -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "¿Qué es la Ley 21.719?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Es la nueva Ley de Protección de Datos Personales de Chile (dic 2024). Reemplaza la ley de 1999 y, por primera vez, crea una Agencia (APDP) que puede fiscalizar y multar. Está inspirada en el GDPR europeo."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "¿A quién aplica la Ley 21.719?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "A cualquier empresa, grande o PYME, que recopile o use datos personales: nombres, RUT, correos, datos de salud, financieros o de RRHH. Si tienes una base de clientes, te aplica."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "¿Qué exige la Ley 21.719?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Pedir consentimiento explícito para usar los datos, permitir que las personas accedan, corrijan o eliminen sus datos, registrar cómo tratas los datos, avisar filtraciones en 72 horas y aplicar medidas de seguridad reales."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "¿Qué pasa si no cumplo la Ley 21.719?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Multas de hasta 20.000 UTM (aproximadamente $1.400 millones) o hasta el 4% de las ventas anuales en caso de reincidencia. La fecha límite para estar en regla es el 1 de diciembre de 2026."
+				}
+			}
+		]
+	})} />
 
 	<main class="relative z-10">
         <Hero />

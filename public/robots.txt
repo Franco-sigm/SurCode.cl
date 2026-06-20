@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://surcode.cl/sitemap-index.xml

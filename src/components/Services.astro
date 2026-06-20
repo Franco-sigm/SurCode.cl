@@ -2,6 +2,19 @@
 // Sección de Servicios: un ∞ (lemniscata) gigante de fondo que LLENA todo el frame,
 // con el menú superpuesto encima. Cada servicio es un punto del ∞; al elegir una
 // pestaña, el plano (∞ + contenido) se desplaza para centrar ese punto. SVG/CSS.
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Lista (en build) las imágenes ya optimizadas de public/servicios/<id>/ para alternarlas.
+function listImages(dir: string): string[] {
+  try {
+    return fs.readdirSync(path.join(process.cwd(), 'public', dir))
+      .filter((f) => /\.(webp|avif|jpe?g|png)$/i.test(f))
+      .sort()
+      .map((f) => `/${dir.replace(/^\/+/, '')}/${f}`);
+  } catch { return []; }
+}
+
 const services = [
   {
     id: "automation", tab: "Automatización",
@@ -10,30 +23,34 @@ const services = [
     description: "Diseñamos flujos que ejecutan tus tareas manuales de forma automática, conectando tus herramientas para que tu negocio funcione solo.",
     features: ["Tareas repetitivas automatizadas", "Integración entre apps y APIs", "Flujos de trabajo a medida", "Reportes y alertas automáticas"],
     icon: "⚡",
+    imageDir: "servicios/automation",
   },
   {
     id: "ai", tab: "IA",
     subtitle: "Lleva tu negocio a la vanguardia",
     title: "Integraciones de Inteligencia Artificial",
     description: "Conectamos modelos de IA a tus procesos: chatbots, agentes y análisis inteligente que trabajan por ti las 24 horas.",
-    features: ["Chatbots y asistentes con IA", "Agentes autónomos a medida", "Integración con tus datos", "Procesamiento de documentos"],
+    features: ["Chatbots y asistentes con IA","Procesamiento de documentos", "Automatización inteligente de tareas", ],
     icon: "🤖",
+    imageDir: "servicios/ai",
   },
   {
-    id: "shield", tab: "Seguridad",
-    subtitle: "Protege lo más valioso de tu negocio",
-    title: "Seguridad e Integridad de Datos",
+    id: "shield", tab: "Paginas web ",
+    subtitle: "Dale Cara a tu Negocio en Internet",
+    title: "Páginas Web Corporativas y portafolios para pofesionales",
     description: "Auditamos y blindamos tu infraestructura para mantener tus datos seguros, íntegros y siempre disponibles.",
-    features: ["Auditoría de seguridad", "Cifrado y respaldos automáticos", "Control de accesos y roles", "Monitoreo ante incidentes"],
+    features: ["Pagina web corporativa", "Portafolio para profesionales", "Diseño moderno y responsivo", "Optimización SEO"],
     icon: "🛡️",
+    imageDir: "servicios/shield",
   },
   {
-    id: "dashboard", tab: "Gestión",
-    subtitle: "Administración y control a medida",
+    id: "dashboard", tab: "Aplicaciones de Gestion",
+    subtitle: "Desarrollo de software a tu medida",
     title: "Sistemas de Gestión Empresarial",
     description: "Desarrollamos software de gestión hecho a tu medida para centralizar, ordenar y optimizar todas tus operaciones.",
-    features: ["Gestión de inventario", "Paneles de control y reportes", "Roles y permisos de usuario", "Hosting y dominio gratis 1 año"],
+    features: ["Gestión de inventario","Administracion de personal", "Paneles de control y reportes", "Roles y permisos de usuario", "Hosting y dominio gratis 1 año"],
     icon: "📊",
+    imageDir: "servicios/dashboard",
   },
   {
     id: "ecommerce", tab: "E-commerce",
@@ -42,8 +59,15 @@ const services = [
     description: "Creamos tiendas online potentes y seguras para que vendas tus productos de forma masiva y sin complicaciones.",
     features: ["Carrito y gestión de inventario", "Pagos seguros", "Experiencia de usuario fluida", "Hosting y dominio gratis 1 año"],
     icon: "🛍️",
+    imageDir: "servicios/ecommerce",
   },
 ];
+
+// Resuelve las imágenes de cada servicio desde su carpeta (vacío => muestra la figura ∞).
+const items = services.map((s) => ({
+  ...s,
+  images: "imageDir" in s && s.imageDir ? listImages(s.imageDir) : [],
+}));
 ---
 
 <section id="servicios" class="relative overflow-hidden min-h-screen"
@@ -87,14 +111,29 @@ const services = [
       ))}
 
       <!-- Paneles por servicio -->
-      {services.map((s) => (
+      {items.map((s) => (
         <div
           id={`svc-panel-${s.id}`}
           role="tabpanel"
           aria-labelledby={`svc-tab-${s.id}`}
           class="svc-panel absolute flex items-center"
         >
-          <div class="w-full max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {s.images.length > 0 && (
+            <div class="svc-photo absolute inset-0 overflow-hidden" aria-hidden="true">
+              {s.images.map((src, idx) => (
+                <img src={src} alt="" data-slide={idx}
+                     class:list={["svc-photo-img absolute inset-0 w-full h-full object-cover", { "is-current": idx === 0 }]}
+                     loading={idx === 0 ? "eager" : "lazy"} decoding="async" />
+              ))}
+              <!-- Difuminado: más oscuro del lado izquierdo (donde va el texto blanco) -->
+              <div class="absolute inset-0"
+                   style="background: linear-gradient(90deg, rgba(8,20,33,0.96) 0%, rgba(8,20,33,0.86) 32%, rgba(8,20,33,0.55) 62%, rgba(8,20,33,0.28) 100%);"></div>
+              <!-- Refuerzo vertical para fundir con la sección arriba/abajo -->
+              <div class="absolute inset-0"
+                   style="background: linear-gradient(180deg, rgba(8,20,33,0.5) 0%, transparent 22%, transparent 68%, rgba(8,20,33,0.7) 100%);"></div>
+            </div>
+          )}
+          <div class="relative z-10 w-full max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <p class="text-xs font-bold uppercase tracking-widest text-[#8fd2ff] mb-3">{s.subtitle}</p>
               <h3 class="font-sn text-2xl md:text-4xl font-extrabold -tracking-[0.02em] text-white leading-tight mb-4">{s.title}</h3>
@@ -118,21 +157,23 @@ const services = [
                 </svg>
               </a>
             </div>
-            <div class="hidden lg:flex relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm h-[300px] items-center justify-center p-8 shadow-2xl">
-              <div class="absolute -bottom-16 -right-10 w-60 h-60 bg-[#3b9eff]/20 blur-[90px] rounded-full"></div>
-              <div class="relative w-[230px] bg-white rounded-2xl shadow-2xl p-5">
-                <div class="w-10 h-10 rounded-xl bg-[#3b9eff]/15 flex items-center justify-center text-[#1e5fd0] text-xl mb-3">{s.icon}</div>
-                <p class="text-[#0a0f1d] text-sm font-bold leading-tight mb-3">{s.tab}</p>
-                <div class="space-y-2">
-                  {s.features.slice(0, 3).map((f) => (
-                    <div class="flex items-center gap-2">
-                      <span class="w-4 h-4 rounded-full bg-[#3b9eff]/15 text-[#1e5fd0] text-[10px] flex items-center justify-center shrink-0">✓</span>
-                      <span class="text-slate-500 text-[11px] leading-tight">{f}</span>
-                    </div>
-                  ))}
+            {s.images.length === 0 && (
+              <div class="hidden lg:flex relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm h-[300px] items-center justify-center p-8 shadow-2xl">
+                <div class="absolute -bottom-16 -right-10 w-60 h-60 bg-[#3b9eff]/20 blur-[90px] rounded-full"></div>
+                <div class="relative w-[230px] bg-white rounded-2xl shadow-2xl p-5">
+                  <div class="w-10 h-10 rounded-xl bg-[#3b9eff]/15 flex items-center justify-center text-[#1e5fd0] text-xl mb-3">{s.icon}</div>
+                  <p class="text-[#0a0f1d] text-sm font-bold leading-tight mb-3">{s.tab}</p>
+                  <div class="space-y-2">
+                    {s.features.slice(0, 3).map((f) => (
+                      <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-[#3b9eff]/15 text-[#1e5fd0] text-[10px] flex items-center justify-center shrink-0">✓</span>
+                        <span class="text-slate-500 text-[11px] leading-tight">{f}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       ))}
@@ -191,6 +232,18 @@ const services = [
     const panels = Array.from(root.querySelectorAll<HTMLElement>('.svc-panel'));
     const N = tabs.length;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Slideshow: alterna suavemente (crossfade) las imágenes de fondo de cada servicio
+    root.querySelectorAll<HTMLElement>('.svc-photo').forEach((group) => {
+      const imgs = Array.from(group.querySelectorAll<HTMLElement>('.svc-photo-img'));
+      if (imgs.length < 2 || reduce) return;
+      let idx = 0;
+      setInterval(() => {
+        imgs[idx].classList.remove('is-current');
+        idx = (idx + 1) % imgs.length;
+        imgs[idx].classList.add('is-current');
+      }, 9000);
+    });
 
     let active = 0;
     let vw = 0, vh = 0, Sx = 0, Sy = 0;
@@ -361,6 +414,18 @@ const services = [
     transform: translateY(0);
   }
 
+  /* Foto de fondo por servicio: las imágenes se alternan con crossfade + zoom lento (Ken Burns) */
+  .svc-photo-img {
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 2.4s ease, transform 12s ease-out;
+    will-change: opacity, transform;
+  }
+  .svc-photo-img.is-current {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+
   /* ∞: tubo 3D (sin filtros pesados sobre la figura gigante → rendimiento) */
   /* Pelos finos que recorren el ∞ (velocidad/fase/sentido aleatorios vía inline) */
   .svc-hair { animation: svc-ring-flow 6s linear infinite; }
@@ -380,5 +445,6 @@ const services = [
   @media (prefers-reduced-motion: reduce) {
     .svc-indicator, .svc-plane, .svc-panel { transition: none; }
     .svc-hair { animation: none; }
+    .svc-photo-img { transition: opacity .4s ease; transform: scale(1); }
   }
 </style>
