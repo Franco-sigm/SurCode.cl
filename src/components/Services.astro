@@ -9,22 +9,13 @@ import path from 'node:path';
 function listImages(dir: string): string[] {
   try {
     return fs.readdirSync(path.join(process.cwd(), 'public', dir))
-      .filter((f) => /\.(webp|avif|jpe?g|png)$/i.test(f))
-      .sort()
-      .map((f) => `/${dir.replace(/^\/+/, '')}/${f}`);
+    .filter((f) => /\.(webp|avif|jpe?g|png)$/i.test(f))
+    .sort()
+    .map((f) => `/${dir.replace(/^\/+/, '')}/${f}`);
   } catch { return []; }
 }
 
 const services = [
-  {
-    id: "automation", tab: "Automatización",
-    subtitle: "Recupera tu tiempo, elimina lo repetitivo",
-    title: "Automatizaciones a Medida",
-    description: "Diseñamos flujos que ejecutan tus tareas manuales de forma automática, conectando tus herramientas para que tu negocio funcione solo.",
-    features: ["Tareas repetitivas automatizadas", "Integración entre apps y APIs", "Flujos de trabajo a medida", "Reportes y alertas automáticas"],
-    icon: "⚡",
-    imageDir: "servicios/automation",
-  },
   {
     id: "ai", tab: "IA",
     subtitle: "Lleva tu negocio a la vanguardia",
@@ -61,6 +52,16 @@ const services = [
     icon: "🛍️",
     imageDir: "servicios/ecommerce",
   },
+   {
+    id: "automation", tab: "Automatización",
+    subtitle: "Recupera tu tiempo, elimina lo repetitivo",
+    title: "Automatizaciones a Medida",
+    description: "Diseñamos flujos que ejecutan tus tareas manuales de forma automática, conectando tus herramientas para que tu negocio funcione solo.",
+    features: ["Tareas repetitivas automatizadas", "Integración entre apps y APIs", "Flujos de trabajo a medida", "Reportes y alertas automáticas"],
+    icon: "⚡",
+    imageDir: "servicios/automation",
+  },
+  
 ];
 
 // Resuelve las imágenes de cada servicio desde su carpeta (vacío => muestra la figura ∞).
