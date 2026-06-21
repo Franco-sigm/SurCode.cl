@@ -12,11 +12,11 @@
       style="background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 40px, #334155 41px, #334155 42px);"
     ></div>
 
-    <!-- Imagen translúcida (lado derecho): se funde con el fondo, máscara hacia el texto y arriba/abajo -->
+    <!-- Imágenes translúcidas (lado derecho): se alternan con crossfade, se funden con el fondo -->
     <div class="absolute inset-y-0 right-0 w-[62%] hidden lg:block">
-      <img src="/servicios/shield/1.webp" alt="" loading="eager" decoding="async"
-           class="w-full h-full object-cover opacity-[0.28]"
-           style="-webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);" />
+      <img src="/servicios/shield/1.webp" alt="" loading="eager" decoding="async" class="hero-img is-current" />
+      <img src="/servicios/automation/1.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
+      <img src="/servicios/automation/3.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
       <!-- Fundido vertical para integrar con navbar (arriba) y la sección siguiente (abajo) -->
       <div class="absolute inset-0" style="background: linear-gradient(180deg, #04101f 0%, transparent 24%, transparent 68%, #04101f 100%);"></div>
     </div>
@@ -68,6 +68,21 @@
     font-family: 'Poppins', 'Geist', system-ui, sans-serif;
   }
 
+  /* Imágenes del hero: translúcidas, monocromáticas y con crossfade entre sí */
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    filter: grayscale(1);
+    transition: opacity 2s ease;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);
+  }
+  .hero-img.is-current { opacity: 0.28; }
+
   /* Entrada: aparecen subiendo con fade, de forma escalonada */
   @keyframes reveal-up {
     from { opacity: 0; transform: translateY(28px); }
@@ -100,5 +115,20 @@
     .reveal { opacity: 1; animation: none; }
     .animate-float-slow,
     .animate-float-slower { animation: none; }
+    .hero-img { transition: none; }
   }
 </style>
+
+<script>
+  // Crossfade entre las imágenes translúcidas del hero
+  const heroImgs = Array.from(document.querySelectorAll<HTMLElement>('#inicio .hero-img'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroImgs.length > 1 && !reduceMotion) {
+    let i = 0;
+    setInterval(() => {
+      heroImgs[i].classList.remove('is-current');
+      i = (i + 1) % heroImgs.length;
+      heroImgs[i].classList.add('is-current');
+    }, 7000);
+  }
+</script>
