@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SaberMasNav from '../../components/SaberMasNav.astro';
+import SaberMasCta from '../../components/SaberMasCta.astro';
+
+const proceso = [
+  { n: "01", title: "Diagnóstico gratis", desc: "Conversamos tu necesidad y entendemos tu negocio. Sin costo ni compromiso." },
+  { n: "02", title: "Propuesta y presupuesto cerrado", desc: "Te enviamos el alcance, los plazos y un precio claro, sin letra chica." },
+  { n: "03", title: "Diseño y planificación", desc: "Definimos cómo se verá y funcionará. Tú revisas y apruebas antes de que construyamos." },
+  { n: "04", title: "Desarrollo por etapas", desc: "Construimos en bloques y te mostramos avances reales. Partimos por lo esencial (MVP) y crecemos desde ahí." },
+  { n: "05", title: "Pruebas y ajustes", desc: "Revisamos todo contigo y afinamos los detalles hasta que quede como esperas." },
+  { n: "06", title: "Entrega y puesta en marcha", desc: "Lo dejamos funcionando, te entregamos accesos y código, y te enseñamos a usarlo." },
+  { n: "07", title: "Soporte y mejora continua", desc: "Quedas con garantía y, si quieres, te acompañamos con soporte y nuevas mejoras." },
+];
+---
+
+<Layout
+  title="Cómo trabajamos | SurCode"
+  description="El ciclo de vida de tu proyecto paso a paso: del primer diagnóstico gratis hasta la entrega, la puesta en marcha y el soporte continuo."
+>
+  <section class="relative pt-36 pb-12 overflow-hidden bg-gradient-to-br from-[#04101f] via-[#06203f] to-[#0a4d8f]">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-[600px] h-[450px] bg-cyan-500/20 rounded-full blur-[160px]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#0a0f1d]"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-5">Saber más · Cómo trabajamos</span>
+      <h1 class="font-sn text-4xl md:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-6">
+        De la idea a tu proyecto funcionando
+      </h1>
+      <p class="text-slate-200/90 text-lg leading-relaxed max-w-2xl mx-auto mb-9">
+        Así es el camino cuando trabajas con nosotros, paso a paso.
+      </p>
+      <SaberMasNav current="como-trabajamos" />
+    </div>
+  </section>
+
+  <section class="relative py-20 bg-[#0a0f1d] overflow-hidden">
+    <div class="absolute top-0 -right-24 w-[500px] h-[500px] bg-[#2bbf4f]/10 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-6 relative z-10">
+      <ol class="relative border-l border-white/10 ml-4 space-y-10">
+        {proceso.map((p) => (
+          <li class="relative pl-8">
+            <span class="absolute -left-[1.15rem] top-0 w-9 h-9 rounded-full bg-[#62d84e]/15 border border-[#62d84e]/40 text-[#62d84e] font-black text-xs flex items-center justify-center">{p.n}</span>
+            <h2 class="font-sn text-lg md:text-xl font-bold text-white mb-1.5">{p.title}</h2>
+            <p class="text-slate-300/90 text-sm md:text-[15px] leading-relaxed">{p.desc}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <SaberMasCta />
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

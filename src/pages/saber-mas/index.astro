@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SaberMasCta from '../../components/SaberMasCta.astro';
+
+// Página índice de "Saber más": presenta los 3 puntos y enlaza a su página independiente.
+const puntos = [
+  {
+    icon: "💡",
+    name: "Introducción de servicios",
+    desc: "Qué hacemos por ti, explicado en simple: automatización, IA, páginas web, software de gestión y tiendas online.",
+    href: "/saber-mas/servicios",
+  },
+  {
+    icon: "💬",
+    name: "Dudas operacionales",
+    desc: "Costos, tiempos de entrega, pagos, propiedad del código y soporte. Respuestas honestas, sin letra chica.",
+    href: "/saber-mas/dudas",
+  },
+  {
+    icon: "🛠️",
+    name: "Cómo trabajamos",
+    desc: "El ciclo de vida de tu proyecto paso a paso: del primer diagnóstico hasta la entrega y el soporte.",
+    href: "/saber-mas/como-trabajamos",
+  },
+];
+---
+
+<Layout
+  title="Saber más | SurCode — Te lo explicamos en simple"
+  description="Conoce en simple qué hacemos, resuelve tus dudas operacionales (costos, tiempos) y descubre cómo trabajamos paso a paso al tomar un proyecto."
+>
+  <section class="relative pt-36 pb-20 overflow-hidden bg-gradient-to-br from-[#04101f] via-[#06203f] to-[#0a4d8f]">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-[600px] h-[450px] bg-cyan-500/20 rounded-full blur-[160px]"></div>
+      <div class="absolute bottom-0 left-0 w-[500px] h-[400px] bg-emerald-500/10 rounded-full blur-[160px]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0a0f1d]"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-5">Conócenos sin vueltas</span>
+        <h1 class="font-sn text-4xl md:text-5xl lg:text-6xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-6">
+          Hagámoslo simple
+        </h1>
+        <p class="text-slate-200/90 text-lg leading-relaxed">
+          Elige el tema que te interesa y te lo contamos en simple, con honestidad.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        {puntos.map((p) => (
+          <a href={p.href} class="group rounded-3xl border border-white/10 bg-white/[0.04] p-7 hover:border-[#62d84e]/50 hover:bg-white/[0.07] transition-all duration-300">
+            <span class="inline-flex w-14 h-14 rounded-2xl bg-[#62d84e]/12 items-center justify-center text-3xl mb-5">{p.icon}</span>
+            <h2 class="font-sn text-xl font-extrabold text-white mb-2 group-hover:text-[#62d84e] transition-colors">{p.name}</h2>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">{p.desc}</p>
+            <span class="inline-flex items-center gap-2 text-[#62d84e] font-bold text-sm">
+              Ver más
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SaberMasCta />
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

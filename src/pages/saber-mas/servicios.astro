@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SaberMasNav from '../../components/SaberMasNav.astro';
+import SaberMasCta from '../../components/SaberMasCta.astro';
+
+const servicios = [
+  {
+    icon: "⚡",
+    name: "Automatizaciones a tu medida",
+    what: "¿Hay tareas que repites una y otra vez —copiar datos, enviar los mismos correos, armar reportes? Las dejamos en manos del software para que se hagan solas, sin errores y a cualquier hora.",
+    forWho: "Si tu equipo pierde horas en tareas manuales que se podrían hacer automáticas.",
+    example: "Que cada venta genere su factura, avise por WhatsApp y descuente del inventario… sin que muevas un dedo.",
+  },
+  {
+    icon: "🤖",
+    name: "Inteligencia Artificial que trabaja por ti",
+    what: "Conectamos IA a tu negocio de forma controlada: asistentes que responden a tus clientes, leen documentos o analizan información, las 24 horas.",
+    forWho: "Si quieres responder rápido o procesar mucha información sin agrandar tu equipo.",
+    example: "Un asistente que contesta las preguntas frecuentes de tus clientes a cualquier hora y te deriva solo los casos importantes.",
+  },
+  {
+    icon: "🛡️",
+    name: "Páginas web que dan confianza",
+    what: "Tu cara en internet. Diseñamos sitios y portafolios modernos, rápidos y que se ven bien en cualquier celular, pensados para que te encuentren y te elijan.",
+    forWho: "Si quieres una presencia profesional o mostrar tu trabajo de forma seria.",
+    example: "Una web corporativa que aparezca en Google y convierta las visitas en clientes reales.",
+  },
+  {
+    icon: "📊",
+    name: "Software de gestión hecho para ti",
+    what: "Un sistema a tu medida para ordenar tu operación: inventario, clientes, personal, reportes… todo en un solo lugar y a tu manera, no a la de un programa genérico.",
+    forWho: "Si llevas tu negocio en planillas o con sistemas que no se adaptan a cómo trabajas.",
+    example: "Un panel donde ves tus ventas, stock y equipo en tiempo real, desde el computador o el celular.",
+  },
+  {
+    icon: "🛍️",
+    name: "Tiendas online listas para vender",
+    what: "Creamos tu tienda para que vendas por internet de forma simple y segura: carrito, pagos, despachos y control de stock, todo conectado.",
+    forWho: "Si quieres vender tus productos las 24 horas sin depender solo de las redes sociales.",
+    example: "Una tienda con Webpay y Mercado Pago donde tus clientes compran solos, de día o de noche.",
+  },
+];
+---
+
+<Layout
+  title="Introducción de servicios | SurCode"
+  description="Qué hacemos por ti, explicado en simple: automatización, inteligencia artificial, páginas web, software de gestión y tiendas online."
+>
+  <section class="relative pt-36 pb-12 overflow-hidden bg-gradient-to-br from-[#04101f] via-[#06203f] to-[#0a4d8f]">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-[600px] h-[450px] bg-cyan-500/20 rounded-full blur-[160px]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#0a0f1d]"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-5">Saber más · Introducción de servicios</span>
+      <h1 class="font-sn text-4xl md:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-6">
+        Nuestros servicios, explicados como a un amigo
+      </h1>
+      <p class="text-slate-200/90 text-lg leading-relaxed max-w-2xl mx-auto mb-9">
+        Sin tecnicismos. Solo lo que significan para ti y tu día a día.
+      </p>
+      <SaberMasNav current="servicios" />
+    </div>
+  </section>
+
+  <section class="relative py-20 bg-[#0a0f1d]">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        {servicios.map((s) => (
+          <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-8 hover:border-[#62d84e]/40 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="flex items-center gap-4 mb-5">
+              <span class="w-12 h-12 rounded-2xl bg-[#62d84e]/12 flex items-center justify-center text-2xl shrink-0">{s.icon}</span>
+              <h2 class="font-sn text-xl md:text-2xl font-extrabold text-white leading-tight">{s.name}</h2>
+            </div>
+            <p class="text-slate-300/90 text-sm md:text-[15px] leading-relaxed mb-5">{s.what}</p>
+            <div class="space-y-3 text-sm">
+              <p class="flex gap-2.5 text-slate-300">
+                <span class="text-[#62d84e] font-bold shrink-0">Ideal si</span>
+                <span class="text-slate-400">{s.forWho}</span>
+              </p>
+              <p class="flex gap-2.5 text-slate-300 pt-3 border-t border-white/5">
+                <span class="text-[#8fd2ff] font-bold shrink-0">Por ejemplo</span>
+                <span class="text-slate-400 italic">{s.example}</span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SaberMasCta />
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

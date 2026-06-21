@@ -395,10 +395,12 @@ const items = services.map((s) => ({
     opacity: 0;
     transform: translateY(16px);
     transition: opacity .55s ease, transform .55s ease;
+    pointer-events: none; /* los paneles ocultos no deben capturar clics (tapaban el botón) */
   }
   .svc-panel.is-shown {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;  /* solo el panel activo es interactivo */
   }
 
   /* Foto de fondo por servicio: las imágenes se alternan con crossfade + zoom lento (Ken Burns) */

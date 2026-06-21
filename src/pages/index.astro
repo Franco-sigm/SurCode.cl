@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
+import Industrias from '../components/Industrias.astro';
 import Ley21719 from '../components/Ley21719.astro';
 
 import Faq from '../components/Faq.astro';
@@ -76,6 +77,7 @@ import Testimonials from '../components/Testimonios.astro'
 	<main class="relative z-10">
         <Hero />
         <Services />
+        <Industrias />
         <Ley21719 />
         <Testimonials />
       
@@ -87,34 +89,39 @@ import Testimonials from '../components/Testimonios.astro'
 </Layout>
 
 <style>
-	/* Overlay a pantalla completa que se desvanece tras el pop de la estrella */
+	/* Overlay a pantalla completa que se desvanece tras el pop de la estrella.
+	   Clave de fluidez: SOLO animamos transform + opacity (capa GPU, sin repaint).
+	   Nada de filter/drop-shadow durante el escalado → 60fps reales. */
 	#intro-splash {
 		position: fixed;
 		inset: 0;
 		z-index: 200;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		place-items: center;
 		background: transparent;
 		pointer-events: none;
-		animation: intro-fade 0.5s ease-in forwards;
+		animation: intro-fade 0.85s linear forwards;
 	}
 	.intro-star {
-		width: clamp(110px, 22vw, 200px);
-		height: clamp(110px, 22vw, 200px);
+		width: clamp(96px, 20vw, 180px);
+		aspect-ratio: 1 / 1;
 		transform-origin: center;
-		filter: drop-shadow(0 0 40px rgba(98, 216, 78, 0.55));
-		animation: intro-grow 0.5s ease-in forwards;
+		transform: translateZ(0) scale(0.18);
+		will-change: transform, opacity;
+		backface-visibility: hidden;
+		animation: intro-grow 0.85s forwards;
 	}
-	/* Parte pequeña en el centro, se agranda de forma continua y se desvanece */
+	/* Bloom suave al nacer → acelera → se expande y se disuelve revelando la página.
+	   Easing por tramo (animation-timing-function dentro del keyframe) para máxima fluidez. */
 	@keyframes intro-grow {
-		0%   { transform: scale(0.12); opacity: 1; }
-		65%  { transform: scale(7); opacity: 1; }
-		100% { transform: scale(20); opacity: 0; }
+		0%   { transform: translateZ(0) scale(0.18); opacity: 0; animation-timing-function: cubic-bezier(.16,.84,.32,1); }
+		16%  { transform: translateZ(0) scale(1);    opacity: 1; animation-timing-function: cubic-bezier(.5,0,.84,.2); }
+		68%  { transform: translateZ(0) scale(7);    opacity: 1; animation-timing-function: cubic-bezier(.72,0,.9,.36); }
+		100% { transform: translateZ(0) scale(28);   opacity: 0; }
 	}
+	/* El contenedor queda opaco (la estrella controla su propio fade) y se oculta al final */
 	@keyframes intro-fade {
-		0%      { opacity: 1; }
-		65%     { opacity: 1; }
+		0%, 99% { opacity: 1; }
 		100%    { opacity: 0; visibility: hidden; }
 	}
 	@media (prefers-reduced-motion: reduce) {

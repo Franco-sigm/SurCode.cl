@@ -1,0 +1,144 @@
+---
+// Sección "Industrias": cómo SurCode aporta tecnología a los principales sectores
+// económicos de Chile. Pensada para que cada visitante se vea reflejado en su rubro
+// y para SEO local (software para minería, agro, viñas, turismo, etc.).
+const industrias = [
+  {
+    icon: "⛏️",
+    name: "Minería",
+    context: "El motor de Chile genera enormes volúmenes de datos operacionales.",
+    solutions: [
+      "Dashboards de producción y equipos en tiempo real",
+      "IA para mantenimiento predictivo de maquinaria",
+      "Automatización de reportes operacionales y de seguridad",
+    ],
+  },
+  {
+    icon: "🍇",
+    name: "Vitivinícola",
+    context: "Del viñedo a la exportación, cada etapa puede ser más eficiente.",
+    solutions: [
+      "Trazabilidad desde la cosecha hasta la botella",
+      "E-commerce y club de vinos para venta directa",
+      "Gestión de barricas, stock y pedidos",
+    ],
+  },
+  {
+    icon: "🍒",
+    name: "Agroexportación de frutas",
+    context: "Cerezas, uvas, arándanos y paltas: Chile alimenta al mundo.",
+    solutions: [
+      "Trazabilidad y control de calidad para exportar",
+      "Automatización de certificados y documentación aduanera",
+      "Paneles de packing, frío y logística",
+    ],
+  },
+  {
+    icon: "🐟",
+    name: "Pesca y acuicultura",
+    context: "Salmón y mariscos con altos estándares de control sanitario.",
+    solutions: [
+      "Monitoreo de centros de cultivo con sensores (IoT)",
+      "Trazabilidad sanitaria y reportes para fiscalización",
+      "Gestión de producción y cadena de frío",
+    ],
+  },
+  {
+    icon: "🏔️",
+    name: "Turismo",
+    context: "De Atacama a la Patagonia, experiencias que merecen estar online.",
+    solutions: [
+      "Sitios web con reservas online para tours y hoteles",
+      "Chatbots con IA para atención 24/7 (multi-idioma)",
+      "Gestión de reservas, pagos y disponibilidad",
+    ],
+  },
+  {
+    icon: "🚢",
+    name: "Logística y exportación",
+    context: "Chile, país exportador: mover carga con eficiencia y control.",
+    solutions: [
+      "Seguimiento de envíos y flotas en tiempo real",
+      "Automatización de documentación y aduanas",
+      "Integración con bodegas y proveedores",
+    ],
+  },
+  {
+    icon: "🛍️",
+    name: "Retail y comercio",
+    context: "Vender más y mejor, online y en tienda, sin fricción.",
+    solutions: [
+      "Tiendas online con Webpay y Mercado Pago",
+      "Inventario integrado entre canales (omnicanal)",
+      "Automatización de postventa y fidelización",
+    ],
+  },
+  {
+    icon: "💼",
+    name: "Servicios y pymes",
+    context: "Estudios, clínicas y consultoras: ordenar para poder crecer.",
+    solutions: [
+      "Software de gestión a medida (agenda, clientes, facturación)",
+      "Automatización de tareas administrativas",
+      "Cumplimiento de la Ley 21.719 de datos",
+    ],
+  },
+];
+---
+
+<section id="industrias" class="relative py-24 overflow-hidden"
+         style="background: linear-gradient(180deg, #0a0f1d 0%, #0a1626 50%, #0a0f1d 100%);">
+  <!-- Glows de marca -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute -top-32 left-0 w-[600px] h-[500px] bg-[#1f6dd0]/10 rounded-full blur-[170px]"></div>
+    <div class="absolute -bottom-32 right-0 w-[600px] h-[500px] bg-[#2bbf4f]/10 rounded-full blur-[170px]"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <!-- Encabezado -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-4">Industrias</span>
+      <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-5">
+        Tecnología para los motores de Chile
+      </h2>
+      <p class="text-slate-300/80 text-base md:text-lg">
+        Conocemos el contexto de tu rubro. Así aportamos con software, automatización e IA
+        en los sectores que mueven al país.
+      </p>
+    </div>
+
+    <!-- Grilla de industrias -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {industrias.map((ind) => (
+        <div class="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#62d84e]/40 hover:bg-white/[0.05] transition-all duration-300">
+          <div class="flex items-center gap-3.5 mb-3">
+            <span class="w-12 h-12 rounded-2xl bg-[#62d84e]/12 flex items-center justify-center text-2xl shrink-0">{ind.icon}</span>
+            <h3 class="font-sn text-lg md:text-xl font-extrabold text-white leading-tight">{ind.name}</h3>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed mb-5">{ind.context}</p>
+          <ul class="space-y-2.5">
+            {ind.solutions.map((s) => (
+              <li class="flex items-start gap-2.5 text-slate-300 text-sm">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-[#3b9eff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+                  <circle cx="12" cy="12" r="9" class="opacity-30" />
+                </svg>
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Cierre: ¿no ves tu industria? -->
+    <p class="text-center text-slate-400 text-sm mt-12">
+      ¿No ves tu industria aquí?
+      <a href="/contacto" class="text-[#62d84e] font-semibold hover:underline">Cuéntanos tu caso y diseñamos la solución →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

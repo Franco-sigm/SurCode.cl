@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SaberMasNav from '../../components/SaberMasNav.astro';
+import SaberMasCta from '../../components/SaberMasCta.astro';
+
+const dudas = [
+  {
+    q: "¿Cuánto cuesta un proyecto?",
+    a: "Trabajamos con una propuesta cerrada: sabes el valor total antes de empezar, sin sorpresas. Como cada proyecto es distinto, partimos con un diagnóstico gratis y te entregamos una cotización clara con todo lo que incluye.",
+  },
+  {
+    q: "¿Cuánto se demora la entrega?",
+    a: "Depende de lo que necesites. Una web puede estar en pocas semanas; un sistema más grande lo entregamos por etapas, empezando por una primera versión funcional y creciendo desde ahí. Siempre con fechas claras para que sepas en qué vamos.",
+  },
+  {
+    q: "¿Cómo son los pagos?",
+    a: "Normalmente se trabaja con un anticipo para empezar y el resto contra avances o a la entrega, según el tamaño del proyecto. Lo definimos juntos en la propuesta, de forma transparente.",
+  },
+  {
+    q: "Al final, ¿el sistema queda mío?",
+    a: "100% tuyo. Te entregamos el código, los accesos y todo lo necesario. No quedas amarrado a nosotros: si algún día quieres seguir con otro equipo, puedes hacerlo sin problemas.",
+  },
+  {
+    q: "No sé nada de tecnología, ¿es un problema?",
+    a: "Para nada, y esa es justo nuestra pega. Hablamos en simple, sin tecnicismos, y te acompañamos en cada paso. Tú pones el conocimiento de tu negocio; nosotros, la parte técnica.",
+  },
+  {
+    q: "¿Y después de entregar me dejan solo?",
+    a: "No. Incluimos un período de garantía y planes de soporte opcionales para acompañarte. En webs y tiendas, además, el hosting y el dominio van gratis el primer año.",
+  },
+];
+---
+
+<Layout
+  title="Dudas operacionales | SurCode"
+  description="Costos, tiempos de entrega, pagos, propiedad del código y soporte. Respondemos las dudas operacionales de cualquier cliente, con honestidad."
+>
+  <section class="relative pt-36 pb-12 overflow-hidden bg-gradient-to-br from-[#04101f] via-[#06203f] to-[#0a4d8f]">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-[600px] h-[450px] bg-cyan-500/20 rounded-full blur-[160px]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#0a0f1d]"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-5">Saber más · Dudas operacionales</span>
+      <h1 class="font-sn text-4xl md:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-6">
+        Costos, tiempos y todo lo que te preguntarías
+      </h1>
+      <p class="text-slate-200/90 text-lg leading-relaxed max-w-2xl mx-auto mb-9">
+        Respuestas honestas, sin letra chica.
+      </p>
+      <SaberMasNav current="dudas" />
+    </div>
+  </section>
+
+  <section class="relative py-20 overflow-hidden" style="background: linear-gradient(160deg, #060d18 0%, #08182a 60%, #0a1f31 100%);">
+    <div class="absolute -top-32 -left-24 w-[500px] h-[500px] bg-[#1f6dd0]/12 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="max-w-3xl mx-auto px-6 relative z-10">
+      <div class="space-y-5">
+        {dudas.map((d) => (
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-7">
+            <h2 class="font-sn text-lg md:text-xl font-bold text-white mb-2.5 flex items-start gap-3">
+              <span class="text-[#62d84e] mt-0.5">—</span>
+              {d.q}
+            </h2>
+            <p class="text-slate-300/90 text-sm md:text-[15px] leading-relaxed pl-7">{d.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SaberMasCta />
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

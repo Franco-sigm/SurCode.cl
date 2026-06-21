@@ -1,0 +1,25 @@
+---
+// Sub-navegación entre las 3 páginas de "Saber más". Resalta la página actual.
+interface Props { current?: string; }
+const { current } = Astro.props;
+
+const items = [
+  { name: "Introducción de servicios", href: "/saber-mas/servicios", key: "servicios" },
+  { name: "Dudas operacionales", href: "/saber-mas/dudas", key: "dudas" },
+  { name: "Cómo trabajamos", href: "/saber-mas/como-trabajamos", key: "como-trabajamos" },
+];
+---
+
+<nav class="flex flex-wrap justify-center gap-3">
+  {items.map((it) => (
+    <a href={it.href}
+       class:list={[
+         "px-5 py-2.5 rounded-full border text-sm font-semibold transition-all",
+         it.key === current
+           ? "border-[#62d84e] bg-[#62d84e]/15 text-white"
+           : "border-white/15 bg-white/5 text-slate-300 hover:border-[#62d84e]/60 hover:text-white",
+       ]}>
+      {it.name}
+    </a>
+  ))}
+</nav>
