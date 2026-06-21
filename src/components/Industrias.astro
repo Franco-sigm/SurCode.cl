@@ -4,7 +4,6 @@
 // y para SEO local (software para minería, agro, viñas, turismo, etc.).
 const industrias = [
   {
-    icon: "⛏️",
     name: "Minería",
     context: "El motor de Chile genera enormes volúmenes de datos operacionales.",
     solutions: [
@@ -14,7 +13,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🍇",
     name: "Vitivinícola",
     context: "Del viñedo a la exportación, cada etapa puede ser más eficiente.",
     solutions: [
@@ -24,7 +22,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🍒",
     name: "Agroexportación de frutas",
     context: "Cerezas, uvas, arándanos y paltas: Chile alimenta al mundo.",
     solutions: [
@@ -34,7 +31,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🐟",
     name: "Pesca y acuicultura",
     context: "Salmón y mariscos con altos estándares de control sanitario.",
     solutions: [
@@ -44,7 +40,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🏔️",
     name: "Turismo",
     context: "De Atacama a la Patagonia, experiencias que merecen estar online.",
     solutions: [
@@ -54,7 +49,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🚢",
     name: "Logística y exportación",
     context: "Chile, país exportador: mover carga con eficiencia y control.",
     solutions: [
@@ -64,7 +58,6 @@ const industrias = [
     ],
   },
   {
-    icon: "🛍️",
     name: "Retail y comercio",
     context: "Vender más y mejor, online y en tienda, sin fricción.",
     solutions: [
@@ -74,7 +67,6 @@ const industrias = [
     ],
   },
   {
-    icon: "💼",
     name: "Servicios y pymes",
     context: "Estudios, clínicas y consultoras: ordenar para poder crecer.",
     solutions: [
@@ -111,8 +103,8 @@ const industrias = [
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {industrias.map((ind) => (
         <div class="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#62d84e]/40 hover:bg-white/[0.05] transition-all duration-300">
-          <div class="flex items-center gap-3.5 mb-3">
-            <span class="w-12 h-12 rounded-2xl bg-[#62d84e]/12 flex items-center justify-center text-2xl shrink-0">{ind.icon}</span>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-1.5 h-7 rounded-full bg-[#62d84e] shrink-0"></span>
             <h3 class="font-sn text-lg md:text-xl font-extrabold text-white leading-tight">{ind.name}</h3>
           </div>
           <p class="text-slate-400 text-sm leading-relaxed mb-5">{ind.context}</p>

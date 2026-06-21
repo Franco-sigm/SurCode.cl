@@ -1,3 +1,6 @@
+---
+---
+
 <section id="inicio" class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
   <!-- Fondo degradado: navy oscuro (izq) -> azul brillante (der) -->
   <div class="absolute inset-0 z-0 pointer-events-none">
@@ -9,49 +12,50 @@
       style="background-image: repeating-radial-gradient(circle at center, transparent 0, transparent 40px, #334155 41px, #334155 42px);"
     ></div>
 
+    <!-- Imagen translúcida (lado derecho): se funde con el fondo, máscara hacia el texto y arriba/abajo -->
+    <div class="absolute inset-y-0 right-0 w-[62%] hidden lg:block">
+      <img src="/servicios/shield/1.webp" alt="" loading="eager" decoding="async"
+           class="w-full h-full object-cover opacity-[0.28]"
+           style="-webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);" />
+      <!-- Fundido vertical para integrar con navbar (arriba) y la sección siguiente (abajo) -->
+      <div class="absolute inset-0" style="background: linear-gradient(180deg, #04101f 0%, transparent 24%, transparent 68%, #04101f 100%);"></div>
+    </div>
+
     <!-- Glow de acento (flotando suavemente) -->
     <div class="absolute top-1/3 right-0 w-[700px] h-[500px] bg-cyan-500/20 rounded-full blur-[160px] animate-float-slow"></div>
     <div class="absolute bottom-0 left-0 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-[160px] animate-float-slower"></div>
 
-    <!-- Difuminado hacia el contenido siguiente: funde con el navy con que arranca la sección Ley 21.719 -->
+    <!-- Difuminado hacia el contenido siguiente -->
     <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-[#04101f]"></div>
   </div>
 
   <div class="container mx-auto px-6 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div class="max-w-3xl">
 
-      <!-- Columna izquierda: Titular -->
-      <h1 class="font-sn text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold -tracking-[0.02em] leading-[1.04]">
-        <span class="block text-[#62d84e] reveal reveal-1">
-          Desarrollo Web 
-        </span>
-        <span class="block text-white reveal reveal-2">
-          Empresarial en Chile
-
-        </span>
+      <!-- Titular: identidad de marca -->
+      <h1 class="reveal reveal-2 font-sn text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold -tracking-[0.02em] leading-[1.0] text-white">
+        Software <span class="text-[#62d84e]">Factory</span>
       </h1>
 
+      <!-- Bajada: la propuesta -->
+      <p class="font-sn mt-5 text-1xl sm:text-2xl lg:text-3xl font-extrabold -tracking-[0.02em] leading-[1.12]">
+        <span class="block text-white reveal reveal-3">Soluciones a medida,</span>
+        <span class="block text-[#62d84e] reveal reveal-3">automatización e IA</span>
+        <span class="block text-white reveal reveal-3">para tu empresa.</span>
+      </p>
 
-      <!-- Columna derecha: Apoyo + CTAs -->
-      <div class="flex flex-col gap-8 lg:pt-2">
-        <p class="text-slate-200/90 text-base md:text-lg leading-relaxed max-w-xl reveal reveal-3">
-           Agencia de desarrollo web empresarial.
-        </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 reveal reveal-4">
-          <a
-            href="#contacto"
-            class="inline-flex items-center justify-center px-8 h-14 rounded-full bg-[#62d84e] text-[#04101f] font-bold text-sm transition-all hover:bg-[#74e85f] hover:scale-105 shadow-[0_10px_40px_rgba(98,216,78,0.35)]"
-          >
-            Solicitar Propuesta
-          </a>
-          <a
-            href="#servicios"
-            class="inline-flex items-center justify-center px-8 h-14 rounded-full border-2 border-[#62d84e] text-white font-bold text-sm transition-all hover:bg-[#62d84e]/10"
-          >
-            Ver Servicios
-          </a>
-        </div>
+
+      <!-- CTAs -->
+      <div class="reveal reveal-4 flex flex-col sm:flex-row gap-4 mt-9">
+        <a href="/contacto"
+           class="inline-flex items-center justify-center px-8 h-14 rounded-full bg-[#62d84e] text-[#04101f] font-bold text-sm transition-all hover:bg-[#74e85f] hover:scale-105 shadow-[0_10px_40px_rgba(98,216,78,0.35)]">
+          Solicitar propuesta
+        </a>
+        <a href="#servicios"
+           class="inline-flex items-center justify-center px-8 h-14 rounded-full border-2 border-[#62d84e] text-white font-bold text-sm transition-all hover:bg-[#62d84e]/10">
+          Ver servicios
+        </a>
       </div>
 
     </div>
@@ -73,10 +77,11 @@
     opacity: 0;
     animation: reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  .reveal-1 { animation-delay: 0.1s; }
-  .reveal-2 { animation-delay: 0.25s; }
-  .reveal-3 { animation-delay: 0.45s; }
-  .reveal-4 { animation-delay: 0.6s; }
+  .reveal-1 { animation-delay: 0.10s; }
+  .reveal-2 { animation-delay: 0.22s; }
+  .reveal-3 { animation-delay: 0.40s; }
+  .reveal-4 { animation-delay: 0.55s; }
+  .reveal-5 { animation-delay: 0.70s; }
 
   /* Glows del fondo flotando suavemente para dar profundidad */
   @keyframes float-a {
