@@ -15,6 +15,7 @@ const MAP = {
   'paginas-web': 'shield',
   'ia': 'ai',
   'automations': 'automation',
+  'hero': 'hero',
 };
 
 const exts = /\.(jpe?g|png|webp|avif)$/i;
@@ -42,7 +43,8 @@ const sharpenFor = (name) => {
 
 // Recorte vertical fino (0 = arriba, 0.5 = centro, 1 = abajo). Control exacto de qué franja 16:9 mostrar.
 const CROP_Y = {
-  'agefis': 0.16, // muestra más el diagrama de flujo (arriba) sin perder la laptop
+  'agefis': 0.16,       // muestra más el diagrama de flujo (arriba) sin perder la laptop
+  'krakenimages': 0.6,  // foto vertical: baja el encuadre para ver las 4 manos unidas (centro-bajo)
 };
 const cropYFor = (name) => {
   for (const k in CROP_Y) if (name.includes(k)) return CROP_Y[k];

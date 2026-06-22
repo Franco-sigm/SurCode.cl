@@ -13,10 +13,10 @@
     ></div>
 
     <!-- Imágenes translúcidas (lado derecho): se alternan con crossfade, se funden con el fondo -->
-    <div class="absolute inset-y-0 right-0 w-[62%] hidden lg:block">
-      <img src="/servicios/shield/1.webp" alt="" loading="eager" decoding="async" class="hero-img is-current" />
-      <img src="/servicios/automation/1.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
-      <img src="/servicios/automation/3.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
+    <div class="hero-media absolute inset-y-0 right-0 w-[62%] hidden lg:block">
+      <img src="/servicios/hero/2.webp" alt="" loading="eager" decoding="async" class="hero-img is-current" />
+      <img src="/servicios/hero/1.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
+      <img src="/servicios/hero/3.webp" alt="" loading="lazy" decoding="async" class="hero-img" />
       <!-- Fundido vertical para integrar con navbar (arriba) y la sección siguiente (abajo) -->
       <div class="absolute inset-0" style="background: linear-gradient(180deg, #04101f 0%, transparent 24%, transparent 68%, #04101f 100%);"></div>
     </div>
@@ -68,6 +68,13 @@
     font-family: 'Poppins', 'Geist', system-ui, sans-serif;
   }
 
+  /* Difuminado del bloque completo de imágenes: funde el borde izquierdo (lado del
+     texto) de forma muy progresiva, sin ninguna línea dura donde empieza la imagen. */
+  .hero-media {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.04) 16%, rgba(0,0,0,.2) 38%, rgba(0,0,0,.55) 62%, #000 92%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.04) 16%, rgba(0,0,0,.2) 38%, rgba(0,0,0,.55) 62%, #000 92%);
+  }
+
   /* Imágenes del hero: translúcidas, monocromáticas y con crossfade entre sí */
   .hero-img {
     position: absolute;
@@ -78,8 +85,6 @@
     opacity: 0;
     filter: grayscale(1);
     transition: opacity 2s ease;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);
-    mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 32%, #000 72%);
   }
   .hero-img.is-current { opacity: 0.28; }
 

@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SaberMasCta from '../../components/SaberMasCta.astro';
+import { industrias } from '../../data/industrias';
+
+// Genera una página estática por cada industria definida en src/data/industrias.ts
+export function getStaticPaths() {
+  return industrias.map((ind) => ({
+    params: { slug: ind.slug },
+    props: { ind },
+  }));
+}
+
+const { ind } = Astro.props;
+// Otras industrias para navegar entre rubros al pie de la página
+const otras = industrias.filter((i) => i.slug !== ind.slug);
+---
+
+<Layout title={ind.seoTitle} description={ind.seoDescription}>
+  <!-- JSON-LD: servicio por industria para rich results -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": `Software a medida para ${ind.name}`,
+    "provider": { "@type": "Organization", "name": "SurCode" },
+    "areaServed": { "@type": "Country", "name": "Chile" },
+    "description": ind.seoDescription,
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": `Soluciones para ${ind.name}`,
+      "itemListElement": ind.solutions.map((s) => ({
+        "@type": "Offer",
+        "itemOffered": { "@type": "Service", "name": s.title, "description": s.desc }
+      }))
+    }
+  })} />
+
+  <!-- Hero del rubro -->
+  <section class="relative pt-36 pb-16 overflow-hidden bg-gradient-to-br from-[#04101f] via-[#06203f] to-[#0a4d8f]">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-1/4 right-0 w-[600px] h-[450px] bg-cyan-500/20 rounded-full blur-[160px]"></div>
+      <div class="absolute -bottom-10 left-0 w-[500px] h-[400px] bg-[#2bbf4f]/12 rounded-full blur-[160px]"></div>
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#0a0f1d]"></div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm text-slate-400 mb-6" aria-label="Ruta de navegación">
+        <a href="/#industrias" class="hover:text-[#62d84e] transition-colors">Industrias</a>
+        <span class="text-slate-600">/</span>
+        <span class="text-slate-200">{ind.name}</span>
+      </nav>
+      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-5">Industrias</span>
+      <h1 class="font-sn text-4xl md:text-5xl lg:text-6xl font-extrabold -tracking-[0.02em] text-white leading-[1.03] mb-5">
+        {ind.name}
+      </h1>
+      <p class="font-sn text-xl md:text-2xl font-bold text-[#84ef67] mb-6">{ind.tagline}</p>
+      <p class="text-slate-200/90 text-lg leading-relaxed max-w-2xl">{ind.intro}</p>
+    </div>
+  </section>
+
+  <!-- Desafíos del rubro -->
+  <section class="relative py-20 bg-[#0a0f1d]">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-2xl mb-12">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#3b9eff] mb-4">El contexto</span>
+        <h2 class="font-sn text-2xl md:text-3xl font-extrabold -tracking-[0.02em] text-white leading-tight">
+          Desafíos que conocemos de tu rubro
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {ind.challenges.map((c, i) => (
+          <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <span class="font-sn text-2xl font-extrabold text-[#62d84e]/40">0{i + 1}</span>
+            <p class="text-slate-300 text-sm leading-relaxed mt-3">{c}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo aporta SurCode -->
+  <section class="relative py-20 overflow-hidden"
+           style="background: linear-gradient(180deg, #0a0f1d 0%, #0a1626 50%, #0a0f1d 100%);">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute -bottom-32 right-0 w-[600px] h-[500px] bg-[#2bbf4f]/10 rounded-full blur-[170px]"></div>
+    </div>
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="max-w-2xl mb-12">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-4">Cómo aportamos</span>
+        <h2 class="font-sn text-2xl md:text-3xl font-extrabold -tracking-[0.02em] text-white leading-tight">
+          Lo que SurCode construye para {ind.name}
+        </h2>
+      </div>
+      <div class="space-y-5">
+        {ind.solutions.map((s, i) => (
+          <div class="group flex flex-col md:flex-row gap-5 md:gap-8 rounded-3xl border border-white/10 bg-white/[0.03] p-7 md:p-8 hover:border-[#62d84e]/40 transition-all duration-300">
+            <span class="font-sn text-3xl font-extrabold text-[#62d84e] shrink-0 md:w-12">0{i + 1}</span>
+            <div>
+              <h3 class="font-sn text-lg md:text-xl font-extrabold text-white mb-2 leading-tight">{s.title}</h3>
+              <p class="text-slate-300/90 text-sm md:text-[15px] leading-relaxed">{s.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Caso de uso concreto -->
+      <div class="mt-10 rounded-3xl border border-[#62d84e]/25 bg-[#62d84e]/[0.06] p-7 md:p-9">
+        <span class="inline-flex items-center gap-2 text-[#84ef67] font-bold text-sm mb-3">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+          Por ejemplo
+        </span>
+        <p class="text-slate-100 text-base md:text-lg leading-relaxed italic">{ind.useCase}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Otras industrias -->
+  <section class="relative py-16 bg-[#0a0f1d] border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="font-sn text-sm font-bold uppercase tracking-[0.3em] text-slate-500 mb-6">Otros rubros</h2>
+      <div class="flex flex-wrap gap-3">
+        {otras.map((o) => (
+          <a href={`/industrias/${o.slug}`}
+             class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#62d84e]/40 hover:text-[#62d84e] transition-all">
+            {o.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SaberMasCta />
+</Layout>
+
+<style>
+  .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+</style>

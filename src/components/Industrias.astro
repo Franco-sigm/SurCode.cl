@@ -2,80 +2,8 @@
 // Sección "Industrias": cómo SurCode aporta tecnología a los principales sectores
 // económicos de Chile. Pensada para que cada visitante se vea reflejado en su rubro
 // y para SEO local (software para minería, agro, viñas, turismo, etc.).
-const industrias = [
-  {
-    name: "Minería",
-    context: "El motor de Chile genera enormes volúmenes de datos operacionales.",
-    solutions: [
-      "Dashboards de producción y equipos en tiempo real",
-      "IA para mantenimiento predictivo de maquinaria",
-      "Automatización de reportes operacionales y de seguridad",
-    ],
-  },
-  {
-    name: "Vitivinícola",
-    context: "Del viñedo a la exportación, cada etapa puede ser más eficiente.",
-    solutions: [
-      "Trazabilidad desde la cosecha hasta la botella",
-      "E-commerce y club de vinos para venta directa",
-      "Gestión de barricas, stock y pedidos",
-    ],
-  },
-  {
-    name: "Agroexportación de frutas",
-    context: "Cerezas, uvas, arándanos y paltas: Chile alimenta al mundo.",
-    solutions: [
-      "Trazabilidad y control de calidad para exportar",
-      "Automatización de certificados y documentación aduanera",
-      "Paneles de packing, frío y logística",
-    ],
-  },
-  {
-    name: "Pesca y acuicultura",
-    context: "Salmón y mariscos con altos estándares de control sanitario.",
-    solutions: [
-      "Monitoreo de centros de cultivo con sensores (IoT)",
-      "Trazabilidad sanitaria y reportes para fiscalización",
-      "Gestión de producción y cadena de frío",
-    ],
-  },
-  {
-    name: "Turismo",
-    context: "De Atacama a la Patagonia, experiencias que merecen estar online.",
-    solutions: [
-      "Sitios web con reservas online para tours y hoteles",
-      "Chatbots con IA para atención 24/7 (multi-idioma)",
-      "Gestión de reservas, pagos y disponibilidad",
-    ],
-  },
-  {
-    name: "Logística y exportación",
-    context: "Chile, país exportador: mover carga con eficiencia y control.",
-    solutions: [
-      "Seguimiento de envíos y flotas en tiempo real",
-      "Automatización de documentación y aduanas",
-      "Integración con bodegas y proveedores",
-    ],
-  },
-  {
-    name: "Retail y comercio",
-    context: "Vender más y mejor, online y en tienda, sin fricción.",
-    solutions: [
-      "Tiendas online con Webpay y Mercado Pago",
-      "Inventario integrado entre canales (omnicanal)",
-      "Automatización de postventa y fidelización",
-    ],
-  },
-  {
-    name: "Servicios y pymes",
-    context: "Estudios, clínicas y consultoras: ordenar para poder crecer.",
-    solutions: [
-      "Software de gestión a medida (agenda, clientes, facturación)",
-      "Automatización de tareas administrativas",
-      "Cumplimiento de la Ley 21.719 de datos",
-    ],
-  },
-];
+// Los datos viven en src/data/industrias.ts; cada tarjeta enlaza a /industrias/<slug>.
+import { industrias } from "../data/industrias";
 ---
 
 <section id="industrias" class="relative py-24 overflow-hidden"
@@ -87,22 +15,44 @@ const industrias = [
   </div>
 
   <div class="max-w-6xl mx-auto px-6 relative z-10">
-    <!-- Encabezado -->
-    <div class="text-center max-w-2xl mx-auto mb-16">
-      <span class="inline-block text-[11px] font-bold uppercase tracking-[0.3em] text-[#62d84e] mb-4">Industrias</span>
-      <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.05] mb-5">
-        Tecnología para los motores de Chile
-      </h2>
-      <p class="text-slate-300/80 text-base md:text-lg">
-        Conocemos el contexto de tu rubro. Así aportamos con software, automatización e IA
-        en los sectores que mueven al país.
-      </p>
+    <!-- Encabezado: texto a la izquierda en su frame, sello Marca Chile a la derecha -->
+    <div class="relative flex flex-col lg:flex-row items-center lg:justify-start gap-10 lg:gap-12 max-w-5xl mx-auto mb-16">
+      <!-- Marca de agua grande translúcida (rellena el espacio derecho, estilo hero) -->
+      <img
+        src="/industrias/marca-chile.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        class="marca-chile-ghost hidden lg:block absolute right-0 xl:-right-6 top-1/2 -translate-y-1/2 w-[400px] xl:w-[480px] pointer-events-none select-none"
+      />
+      <!-- Frame de texto (izquierda): título y bajada comparten el mismo ancho para encuadrarse -->
+      <div class="text-center lg:text-left max-w-sm">
+
+        <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.08] mb-4">
+          Software para los motores de nuestro país
+        </h2>
+        <p class="text-slate-300/80 text-base md:text-lg leading-relaxed">
+          comprometidos con el desarrollo tecnológico de nuestros sectores clave.
+        </p>
+      </div>
+      <!-- Frame del logo (derecha) -->
+      <img
+        src="/industrias/marca-chile-color.webp"
+        alt="Marca Chile"
+        loading="lazy"
+        decoding="async"
+        class="h-24 md:h-28 lg:h-32 w-auto shrink-0 drop-shadow-[0_6px_24px_rgba(227,6,19,0.28)]"
+      />
     </div>
 
-    <!-- Grilla de industrias -->
+    <!-- Grilla de industrias: cada tarjeta enlaza a su página de rubro -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {industrias.map((ind) => (
-        <div class="group rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#62d84e]/40 hover:bg-white/[0.05] transition-all duration-300">
+        <a
+          href={`/industrias/${ind.slug}`}
+          class="group flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#62d84e]/40 hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-300"
+        >
           <div class="flex items-center gap-3 mb-4">
             <span class="w-1.5 h-7 rounded-full bg-[#62d84e] shrink-0"></span>
             <h3 class="font-sn text-lg md:text-xl font-extrabold text-white leading-tight">{ind.name}</h3>
@@ -115,11 +65,17 @@ const industrias = [
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
                   <circle cx="12" cy="12" r="9" class="opacity-30" />
                 </svg>
-                <span>{s}</span>
+                <span>{s.title}</span>
               </li>
             ))}
           </ul>
-        </div>
+          <span class="mt-6 pt-4 border-t border-white/5 inline-flex items-center gap-2 text-sm font-bold text-[#62d84e] group-hover:gap-3 transition-all">
+            Ver cómo aportamos
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </span>
+        </a>
       ))}
     </div>
 
@@ -133,4 +89,14 @@ const industrias = [
 
 <style>
   .font-sn { font-family: 'Poppins', 'Geist', system-ui, sans-serif; }
+
+  /* Marca Chile grande translúcida (estilo hero): blanco desaturado, baja opacidad,
+     fundida por una máscara radial para que se integre con el fondo. Decorativa. */
+  .marca-chile-ghost {
+    opacity: 0.08;
+    filter: grayscale(1);
+    /* Degradado direccional: se desvanece suavemente hacia la izquierda (hacia el texto) */
+    -webkit-mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.35) 42%, #000 78%);
+    mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.35) 42%, #000 78%);
+  }
 </style>
