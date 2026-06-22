@@ -24,10 +24,10 @@ import { industrias } from "../data/industrias";
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        class="marca-chile-ghost hidden lg:block absolute right-0 xl:-right-6 top-1/2 -translate-y-1/2 w-[400px] xl:w-[480px] pointer-events-none select-none"
+        class="marca-chile-ghost hidden lg:block absolute right-24 xl:right-32 top-1/2 w-[320px] xl:w-[380px] pointer-events-none select-none"
       />
       <!-- Frame de texto (izquierda): título y bajada comparten el mismo ancho para encuadrarse -->
-      <div class="text-center lg:text-left max-w-sm">
+      <div class="text-center lg:text-left max-w-sm lg:ml-12 xl:ml-20">
 
         <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.08] mb-4">
           Software para los motores de nuestro país
@@ -36,14 +36,6 @@ import { industrias } from "../data/industrias";
           comprometidos con el desarrollo tecnológico de nuestros sectores clave.
         </p>
       </div>
-      <!-- Frame del logo (derecha) -->
-      <img
-        src="/industrias/marca-chile-color.webp"
-        alt="Marca Chile"
-        loading="lazy"
-        decoding="async"
-        class="h-24 md:h-28 lg:h-32 w-auto shrink-0 drop-shadow-[0_6px_24px_rgba(227,6,19,0.28)]"
-      />
     </div>
 
     <!-- Grilla de industrias: cada tarjeta enlaza a su página de rubro -->
@@ -93,8 +85,9 @@ import { industrias } from "../data/industrias";
   /* Marca Chile grande translúcida (estilo hero): blanco desaturado, baja opacidad,
      fundida por una máscara radial para que se integre con el fondo. Decorativa. */
   .marca-chile-ghost {
-    opacity: 0.08;
+    opacity: 0.12;
     filter: grayscale(1);
+    transform: translateY(-50%);
     /* Degradado direccional: se desvanece suavemente hacia la izquierda (hacia el texto) */
     -webkit-mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.35) 42%, #000 78%);
     mask-image: linear-gradient(105deg, transparent 0%, rgba(0,0,0,.35) 42%, #000 78%);
