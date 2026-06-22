@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 ---
 
 <section id="inicio" class="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
@@ -32,6 +33,11 @@
   <div class="container mx-auto px-6 relative z-10">
     <div class="max-w-3xl">
 
+      <!-- Wordmark de marca encima del titular -->
+      <div class="reveal reveal-1 mb-5">
+        <Logo href="/#inicio" wordClass="text-4xl sm:text-5xl" />
+      </div>
+
       <!-- Titular: identidad de marca -->
       <h1 class="reveal reveal-2 font-sn text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold -tracking-[0.02em] leading-[1.0] text-white">
         Software <span class="text-[#62d84e]">Factory</span>
@@ -40,11 +46,11 @@
       <!-- Bajada: la propuesta -->
       <p class="font-sn mt-5 text-1xl sm:text-2xl lg:text-3xl font-extrabold -tracking-[0.02em] leading-[1.12]">
         <span class="block text-white reveal reveal-3">Soluciones a medida,</span>
-        <span class="block text-[#62d84e] reveal reveal-3">Desarrollo de softwaremueve  e IA</span>
+        <span class="block text-[#62d84e] reveal reveal-3">Desarrollo de software</span>
         <span class="block text-white reveal reveal-3">para tu empresa.</span>
       </p>
 
-
+      
 
       <!-- CTAs -->
       <div class="reveal reveal-4 flex flex-col sm:flex-row gap-4 mt-9">

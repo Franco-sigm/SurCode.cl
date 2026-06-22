@@ -16,7 +16,7 @@ import { industrias } from "../data/industrias";
 
   <div class="max-w-6xl mx-auto px-6 relative z-10">
     <!-- Encabezado: texto a la izquierda en su frame, sello Marca Chile a la derecha -->
-    <div class="relative flex flex-col lg:flex-row items-center lg:justify-start gap-10 lg:gap-12 max-w-5xl mx-auto mb-16">
+    <div class="relative flex flex-col lg:flex-row items-center lg:justify-start gap-10 lg:gap-12 mb-16">
       <!-- Marca de agua grande translúcida (rellena el espacio derecho, estilo hero) -->
       <img
         src="/industrias/marca-chile.webp"
@@ -24,16 +24,16 @@ import { industrias } from "../data/industrias";
         aria-hidden="true"
         loading="lazy"
         decoding="async"
-        class="marca-chile-ghost hidden lg:block absolute right-24 xl:right-32 top-1/2 w-[320px] xl:w-[380px] pointer-events-none select-none"
+        class="marca-chile-ghost hidden lg:block absolute right-48 xl:right-64 top-1/2 w-[320px] xl:w-[380px] pointer-events-none select-none"
       />
       <!-- Frame de texto (izquierda): título y bajada comparten el mismo ancho para encuadrarse -->
-      <div class="text-center lg:text-left max-w-sm lg:ml-12 xl:ml-20">
+      <div class="text-center lg:text-left max-w-sm lg:ml-8 xl:ml-12">
 
         <h2 class="font-sn text-3xl md:text-4xl lg:text-5xl font-extrabold -tracking-[0.02em] text-white leading-[1.08] mb-4">
           Software para los motores de nuestro país
         </h2>
         <p class="text-slate-300/80 text-base md:text-lg leading-relaxed">
-          comprometidos con el desarrollo tecnológico de nuestros sectores clave.
+          Comprometidos con el desarrollo tecnológico de nuestros sectores clave.
         </p>
       </div>
     </div>
@@ -85,7 +85,7 @@ import { industrias } from "../data/industrias";
   /* Marca Chile grande translúcida (estilo hero): blanco desaturado, baja opacidad,
      fundida por una máscara radial para que se integre con el fondo. Decorativa. */
   .marca-chile-ghost {
-    opacity: 0.12;
+    opacity: 0.26;
     filter: grayscale(1);
     transform: translateY(-50%);
     /* Degradado direccional: se desvanece suavemente hacia la izquierda (hacia el texto) */
